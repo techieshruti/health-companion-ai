@@ -1,4 +1,7 @@
-function DragDropArea() {
+import { useState } from "react";
+
+function DragDropArea({ onFileDrop }) {
+    const [isDragging, setIsDragging] = useState(false);
   return (
     <div className="border-2 border-dashed border-gray-400 rounded-xl p-10 text-center mt-6">
       <p className="text-gray-600">
