@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Chat = () => {
-  return (
-    <div>Chat</div>
-  )
+function Chat() {
+  return <h1>AI Health Chat</h1>;
 }
 
-export default Chat
+export default Chat;

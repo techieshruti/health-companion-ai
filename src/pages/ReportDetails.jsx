@@ -1,9 +1,7 @@
 import React from 'react'
 
-const ReportDetails = () => {
-  return (
-    <div>ReportDetails</div>
-  )
+function ReportDetails() {
+  return <h1>Report Details Page</h1>;
 }
 
-export default ReportDetails
+export default ReportDetails;
