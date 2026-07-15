@@ -6,6 +6,7 @@ import FilePreview from "./FilePreview";
 
 function UploadBox() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
 // handle upload button click  
@@ -24,6 +25,11 @@ function UploadBox() {
 const handleFileDrop = (file) => {
     if (!file) return;
     setSelectedFile(file);
+}
+
+// 
+const validateFile = (file) => {
+
 }
   return (
     <div className="bg-white shadow-lg rounded-xl p-8 max-w-xl w-full">
