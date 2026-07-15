@@ -82,6 +82,9 @@ if (!allowedTypes.includes(file.type)) {
         Try Sample Report
       </button>
       <FilePreview file={selectedFile} />
+      <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">
+      Analyze Report
+    </button>
     </div>
   );
 }
