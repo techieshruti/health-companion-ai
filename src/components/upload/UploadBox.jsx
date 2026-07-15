@@ -18,19 +18,45 @@ function UploadBox() {
   const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (!file) return;
+ if (validateFile(file)) {
   setSelectedFile(file);
+} else {
+  setSelectedFile(null);
+}
 };
 
 // drag and drop handler
 const handleFileDrop = (file) => {
     if (!file) return;
-    setSelectedFile(file);
+    if (validateFile(file)) {
+  setSelectedFile(file);
+} else {
+  setSelectedFile(null);
+}
 }
 
-// 
+// file validation
+const maxFileSize = 10 * 1024 * 1024;
 const validateFile = (file) => {
+const allowedTypes = [
+  "application/pdf",
+  "image/png",
+  "image/jpeg",
+];
+if (!allowedTypes.includes(file.type)) {
+    setError("Only PDF, JPG and PNG files are allowed.");
+    return false;
+  }
 
+  if (file.size > maxFileSize) {
+  setError("File size should not exceed 10 MB.");
+  return false;
 }
+
+  setError("");
+  return true;
+}
+
   return (
     <div className="bg-white shadow-lg rounded-xl p-8 max-w-xl w-full">
       <UploadButton onClick={handleUploadClick} />
@@ -46,6 +72,11 @@ const validateFile = (file) => {
       <div className="my-5 text-gray-500 text-center">OR</div>
 
       <DragDropArea onFileDrop={handleFileDrop} />
+{error && (
+  <p className="mt-4 rounded-md bg-red-100 border border-red-300 text-red-700 px-4 py-2">
+    {error}
+  </p>
+)}
 
       <button className="mt-6 text-blue-600 hover:underline">
         Try Sample Report
