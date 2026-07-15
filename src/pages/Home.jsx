@@ -1,29 +1,20 @@
-import { Link } from "react-router-dom";
+import UploadBox from "../components/upload/UploadBox";
 
 function Home() {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4">
 
-      <br />
+      <h1 className="text-5xl font-bold text-blue-700">
+        AI Health Companion
+      </h1>
 
-      <Link to="/dashboard">
-        <button>Go to Dashboard</button>
-      </Link>
+      <p className="text-gray-600 mt-4 mb-10 text-center max-w-2xl">
+        Upload your medical reports and understand every test in simple
+        English with AI-powered explanations.
+      </p>
 
-      <br />
-      <br />
+      <UploadBox />
 
-      <Link to="/report">
-        <button>Go to Report Details</button>
-      </Link>
-
-      <br />
-      <br />
-
-      <Link to="/chat">
-        <button>Go to AI Chat</button>
-      </Link>
     </div>
   );
 }
