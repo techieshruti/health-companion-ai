@@ -22,13 +22,7 @@ function UploadBox() {
     <div className="bg-white shadow-lg rounded-xl p-8 max-w-xl w-full">
       <UploadButton onClick={handleUploadClick} />
       {/* hidden input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".pdf,image/*"
-        hidden
-        onChange={handleFileChange}
-      />
+     
 
       <div className="my-5 text-gray-500 text-center">OR</div>
 
