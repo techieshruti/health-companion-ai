@@ -1,20 +1,79 @@
 import UploadBox from "../components/upload/UploadBox";
+import MedicalWave from "../components/common/MedicalWave";
 
 function Home() {
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col justify-center items-center px-4">
+    <div className="relative min-h-screen overflow-hidden bg-[#07142A] text-white">
+      {/* Animated Medical Background */}
+      <MedicalWave />
 
-      <h1 className="text-5xl font-bold text-white">
-        AI Health Companion
-      </h1>
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-6 py-16 flex flex-col items-center">
 
-      <p className="text-gray-100 mt-4 mb-10 text-center max-w-2xl">
-        Upload your medical reports and understand every test in simple
-        English with AI-powered explanations.
-      </p>
+        {/* Heading */}
+        <h1 className="text-5xl md:text-6xl font-bold text-center leading-tight">
+          AI Health
+          <span className="block text-cyan-400">
+            Companion
+          </span>
+        </h1>
 
-      <UploadBox />
+        {/* Subtitle */}
+        <p className="mt-6 text-lg md:text-xl text-slate-300 text-center max-w-3xl leading-8">
+          Upload your blood test reports and receive AI-powered explanations,
+          health insights, and easy-to-understand summaries within seconds.
+        </p>
 
+        {/* Upload Card */}
+        <div className="mt-14 w-full flex justify-center">
+          <UploadBox />
+        </div>
+
+        {/* Feature Cards */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
+            <div className="text-4xl mb-4">📄</div>
+
+            <h3 className="text-xl font-semibold mb-2">
+              Upload Reports
+            </h3>
+
+            <p className="text-slate-300">
+              Upload PDF or image-based health reports securely with an
+              intuitive drag-and-drop experience.
+            </p>
+          </div>
+
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
+            <div className="text-4xl mb-4">🤖</div>
+
+            <h3 className="text-xl font-semibold mb-2">
+              AI Explains Every Test
+            </h3>
+
+            <p className="text-slate-300">
+              Understand every medical parameter in simple English without
+              searching the internet.
+            </p>
+          </div>
+
+          <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
+            <div className="text-4xl mb-4">❤️</div>
+
+            <h3 className="text-xl font-semibold mb-2">
+              Personalized Health Insights
+            </h3>
+
+            <p className="text-slate-300">
+              Get an overall AI-generated health summary highlighting important
+              values that may need attention.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   );
 }
