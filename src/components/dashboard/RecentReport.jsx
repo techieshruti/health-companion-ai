@@ -1,5 +1,13 @@
 import { NotepadText } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 function RecentReport() {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate("/report");
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6 mt-8">
       <h2 className="text-xl font-semibold mb-4">
@@ -14,7 +22,7 @@ function RecentReport() {
         Uploaded on: 18 July 2026
       </p>
 
-      <button className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
+      <button onClick={handleViewDetails} className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
         View Details
       </button>
     </div>
