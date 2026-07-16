@@ -1,7 +1,15 @@
-import React from 'react'
+import DashboardHeader from "../components/dashboard/DashboardHeader";
+import SummaryGrid from "../components/dashboard/SummaryGrid";
+import RecentReport from "../components/dashboard/RecentReport";
 
 function Dashboard() {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <div className="min-h-screen bg-gray-100 p-8">
+      <DashboardHeader />
+      <SummaryGrid />
+      <RecentReport />
+    </div>
+  );
 }
 
 export default Dashboard;
