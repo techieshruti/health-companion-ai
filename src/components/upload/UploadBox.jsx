@@ -3,6 +3,7 @@ import DragDropArea from "./DragDropArea";
 import { useState } from "react";
 import { useRef } from "react";
 import FilePreview from "./FilePreview";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 function UploadBox() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -89,13 +90,20 @@ function UploadBox() {
         Try Sample Report
       </button>
 
-      <FilePreview file={selectedFile} />
+      {isAnalyzing ? (
+  <LoadingSpinner />
+) : (
+  <FilePreview file={selectedFile} />
+)}
 
-      {selectedFile && (
-        <button onClick={handleAnalyzeReport} className="bg-blue-600 mt-6 hover:bg-blue-700 cursor-pointer text-white px-6 py-3 rounded-lg font-medium transition">
-      Analyze Report
-    </button>
-      )}
+{selectedFile && !isAnalyzing && (
+  <button
+    onClick={handleAnalyzeReport}
+    className="bg-blue-600 mt-6 hover:bg-blue-700 cursor-pointer text-white px-6 py-3 rounded-lg font-medium transition"
+  >
+    Analyze Report
+  </button>
+)}
     </div>
   );
 }
