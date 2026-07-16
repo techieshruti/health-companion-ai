@@ -1,5 +1,6 @@
 import UploadButton from "./UploadButton";
 import DragDropArea from "./DragDropArea";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRef } from "react";
 import FilePreview from "./FilePreview";
@@ -9,6 +10,7 @@ function UploadBox() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   // handle upload button click
@@ -64,8 +66,7 @@ function UploadBox() {
   setIsAnalyzing(true);
   setTimeout(() => {
     setIsAnalyzing(false);
-
-    console.log("Analysis complete");
+navigate("/dashboard");
   }, 2000);
 };
 
