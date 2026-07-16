@@ -1,5 +1,8 @@
 import UploadBox from "../components/upload/UploadBox";
 import MedicalWave from "../components/common/MedicalWave";
+import { NotepadText } from 'lucide-react';
+import { HeartPulse } from 'lucide-react';
+import { Bot } from 'lucide-react';
 
 function Home() {
   return (
@@ -30,44 +33,47 @@ function Home() {
         </div>
 
         {/* Feature Cards */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
 
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
-            <div className="text-4xl mb-4">📄</div>
+            <div className="text-3xl mb-4">
+              <NotepadText/>
+            </div>
 
-            <h3 className="text-xl font-semibold mb-2">
+            <h3 className="text-lg font-semibold mb-2">
               Upload Reports
             </h3>
 
             <p className="text-slate-300">
-              Upload PDF or image-based health reports securely with an
-              intuitive drag-and-drop experience.
+              Securely upload PDF and image reports.
             </p>
           </div>
 
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
-            <div className="text-4xl mb-4">🤖</div>
+            <div className="text-4xl mb-4">
+               <Bot />
+            </div>
 
             <h3 className="text-xl font-semibold mb-2">
-              AI Explains Every Test
+              AI Explains
             </h3>
 
             <p className="text-slate-300">
-              Understand every medical parameter in simple English without
-              searching the internet.
+              AI explains every health test simply.
             </p>
           </div>
 
           <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl hover:-translate-y-1 hover:shadow-cyan-500/20 transition duration-300">
-            <div className="text-4xl mb-4">❤️</div>
+            <div className="text-5xl mb-4">
+                <HeartPulse/>
+            </div>
 
             <h3 className="text-xl font-semibold mb-2">
               Personalized Health Insights
             </h3>
 
             <p className="text-slate-300">
-              Get an overall AI-generated health summary highlighting important
-              values that may need attention.
+              Get an overall AI-generated health summary.
             </p>
           </div>
 

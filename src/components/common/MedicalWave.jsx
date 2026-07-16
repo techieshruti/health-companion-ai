@@ -2,7 +2,7 @@ function MedicalWave() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <svg
-        className="absolute bottom-0 left-0 w-full h-full opacity-20"
+        className="absolute bottom-16 left-0 w-full h-full opacity-20"
         viewBox="0 0 1440 800"
         preserveAspectRatio="none"
       >

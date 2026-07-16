@@ -1,8 +1,7 @@
 import UploadButton from "./UploadButton";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -10,6 +9,7 @@ function UploadBox() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -21,7 +21,9 @@ function UploadBox() {
   // handle file selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (!file) return;
+
     if (validateFile(file)) {
       setSelectedFile(file);
     } else {
@@ -32,6 +34,7 @@ function UploadBox() {
   // drag and drop handler
   const handleFileDrop = (file) => {
     if (!file) return;
+
     if (validateFile(file)) {
       setSelectedFile(file);
     } else {
@@ -41,8 +44,14 @@ function UploadBox() {
 
   // file validation
   const maxFileSize = 10 * 1024 * 1024;
+
   const validateFile = (file) => {
-    const allowedTypes = ["application/pdf", "image/png", "image/jpeg"];
+    const allowedTypes = [
+      "application/pdf",
+      "image/png",
+      "image/jpeg",
+    ];
+
     if (!allowedTypes.includes(file.type)) {
       setError("Only PDF, JPG and PNG files are allowed.");
       return false;
@@ -52,28 +61,46 @@ function UploadBox() {
       setError("File size should not exceed 10 MB.");
       return false;
     }
+
     setError("");
     return true;
   };
 
-// handle analyze report button only visible when a file is selected
- const handleAnalyzeReport = () => {
-  if (!selectedFile) {
-    setError("Please select a file to analyze.");
-    return;
-  }
+  // handle analyze report
+  const handleAnalyzeReport = () => {
+    if (!selectedFile) {
+      setError("Please select a file to analyze.");
+      return;
+    }
 
-  setIsAnalyzing(true);
-  setTimeout(() => {
-    setIsAnalyzing(false);
-navigate("/dashboard");
-  }, 2000);
-};
+    setIsAnalyzing(true);
+
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      navigate("/dashboard");
+    }, 2000);
+  };
 
   return (
-    <div className="bg-white shadow-lg rounded-xl p-8 max-w-xl w-full">
+    <div
+      className="
+        w-full
+    max-w-2xl
+    rounded-[32px]
+    border border-cyan-400/20
+    bg-white/12
+    backdrop-blur-2xl
+    shadow-[0_25px_80px_rgba(14,165,233,0.18)]
+    p-8
+    md:p-10
+    transition-all
+    duration-500
+    hover:border-cyan-300/30
+    hover:shadow-[0_30px_90px_rgba(14,165,233,0.25)]
+      "
+    >
       <UploadButton onClick={handleUploadClick} />
-      {/* hidden input */}
+
       <input
         ref={fileInputRef}
         type="file"
@@ -82,33 +109,87 @@ navigate("/dashboard");
         onChange={handleFileChange}
       />
 
-      <div className="my-5 text-gray-500 text-center">OR</div>
+      <div className="my-8 flex items-center">
+        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-500/40 to-transparent"></div>
+
+        <span className="px-5 text-xs uppercase tracking-[0.3em] text-slate-400 font-medium">
+          OR
+        </span>
+
+        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-slate-500/40 to-transparent"></div>
+      </div>
 
       <DragDropArea onFileDrop={handleFileDrop} />
-      {error && (
-        <p className="mt-4 rounded-md bg-red-100 border border-red-300 text-red-700 px-4 py-2">
-          {error}
-        </p>
-      )}      
 
-      <button className="mt-6 text-blue-600 bg-gray-300 px-6 py-3 rounded-lg hover:underline">
+      {error && (
+        <div
+          className="
+            mt-6
+            rounded-xl
+            border border-red-400/20
+            bg-red-500/8
+            px-4
+            py-3
+            text-sm
+            text-red-200
+            backdrop-blur
+          "
+        >
+          {error}
+        </div>
+      )}
+
+      <button
+        className="
+mt-7
+inline-flex
+items-center
+text-cyan-300
+hover:text-cyan-200
+transition-all
+duration-300
+font-medium
+hover:translate-x-1
+"
+      >
         Try Sample Report
       </button>
 
-      {isAnalyzing ? (
-  <LoadingSpinner />
-) : (
-  <FilePreview file={selectedFile} />
-)}
+      <div className="mt-6">
+        {isAnalyzing ? (
+          <LoadingSpinner />
+        ) : (
+          <FilePreview file={selectedFile} />
+        )}
+      </div>
 
-{selectedFile && !isAnalyzing && (
-  <button
-    onClick={handleAnalyzeReport}
-    className="bg-blue-600 mt-6 hover:bg-blue-700 cursor-pointer text-white px-6 py-3 rounded-lg font-medium transition"
-  >
-    Analyze Report
-  </button>
-)}
+      {selectedFile && !isAnalyzing && (
+        <button
+          onClick={handleAnalyzeReport}
+          className="
+mt-8
+w-full
+rounded-2xl
+bg-gradient-to-r
+from-blue-600
+via-sky-500
+to-cyan-500
+py-4
+text-lg
+font-semibold
+text-white
+shadow-lg
+shadow-cyan-500/20
+transition-all
+duration-300
+hover:-translate-y-1
+hover:shadow-cyan-400/40
+active:scale-[0.98]
+"
+        >
+          Analyze Report
+        </button>
+      )}
     </div>
   );
 }
