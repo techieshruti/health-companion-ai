@@ -22,9 +22,17 @@ function RecentReport() {
         Uploaded on: 18 July 2026
       </p>
 
-      <button onClick={handleViewDetails} className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
+      <div className='flex justify-between'>
+        <button onClick={handleViewDetails} className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
         View Details
       </button>
+      <button
+        onClick={() => navigate("/")}
+        className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
+      >
+        ← Back to Dashboard
+      </button>
+      </div>
     </div>
   );
 }
