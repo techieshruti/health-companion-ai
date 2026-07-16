@@ -55,15 +55,19 @@ function UploadBox() {
   };
 
 // handle analyze report button only visible when a file is selected
-  const handleAnalyzeReport = () => {
-    if (!selectedFile) {
-      setError("Please select a file to analyze.");
-      return;
-    } 
-    else {
-      setIsAnalyzing(true);
-    }
+ const handleAnalyzeReport = () => {
+  if (!selectedFile) {
+    setError("Please select a file to analyze.");
+    return;
   }
+
+  setIsAnalyzing(true);
+  setTimeout(() => {
+    setIsAnalyzing(false);
+
+    console.log("Analysis complete");
+  }, 2000);
+};
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-8 max-w-xl w-full">
