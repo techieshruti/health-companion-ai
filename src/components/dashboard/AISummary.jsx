@@ -1,6 +1,6 @@
 function AISummary() {
   return (
-    <div className="mt-8 rounded-3xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 p-[1px] shadow-xl">
+    <div className="mt-8 mb-6 rounded-3xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 p-[1px] shadow-xl">
       <div className="rounded-3xl bg-white p-8">
         <div className="flex items-start gap-5">
 

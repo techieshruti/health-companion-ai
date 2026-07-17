@@ -3,51 +3,53 @@ function SummaryCard({ icon, title, value }) {
     <div
       className="
         group
-        rounded-3xl
-        bg-white
+        relative
+        overflow-hidden
+        rounded-2xl
         border
-        border-slate-200
-        shadow-md
-        p-6
-        transition-all
-        duration-300
-        hover:-translate-y-2
-        hover:shadow-xl
-        hover:border-cyan-300
-        cursor-pointer
+        border-cyan-400/15
+        bg-white/5
+        backdrop-blur-xl
+        p-4
+        hover:border-cyan-400/40
+        hover:shadow-[0_0_25px_rgba(34,211,238,0.18)]
       "
     >
-      {/* Icon */}
-      <div
-        className="
-          mx-auto
-          flex
-          h-16
-          w-16
-          items-center
-          justify-center
-          rounded-2xl
-          bg-gradient-to-br
-          from-blue-100
-          to-cyan-100
-          text-3xl
-          transition-transform
-          duration-300
-          group-hover:scale-110
-        "
-      >
-        {icon}
+      {/* subtle glow */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+
+      <div className="relative flex flex-col items-center text-center">
+
+        {/* Icon */}
+        <div
+          className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-xl
+            border
+            border-cyan-400/20
+            bg-cyan-400/10
+            text-2xl
+            shadow-inner
+          "
+        >
+          {icon}
+        </div>
+
+        {/* Number */}
+        <h2 className="mt-3 text-3xl font-bold text-white">
+          {value}
+        </h2>
+
+        {/* Label */}
+        <p className="mt-1 text-xs uppercase tracking-[0.15em] text-slate-400">
+          {title}
+        </p>
+
       </div>
-
-      {/* Value */}
-      <h2 className="mt-6 text-4xl font-bold text-slate-900">
-        {value}
-      </h2>
-
-      {/* Title */}
-      <p className="mt-2 text-sm font-medium tracking-wide uppercase text-slate-500">
-        {title}
-      </p>
     </div>
   );
 }
