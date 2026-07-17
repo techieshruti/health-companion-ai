@@ -25,7 +25,7 @@ function ReportHeader() {
 
         {/* Back Button */}
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
           className="
             inline-flex
             items-center

@@ -9,7 +9,7 @@ import BackgroundEffect from "../components/common/BackgroundEffect";
 function Dashboard() {
   return (
     <div className="relative min-h-screen bg-[#07131F]">
-       <BackgroundEffect variant="particles" />
+       <BackgroundEffect variant="dashboard" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
 
