@@ -62,44 +62,49 @@ function ReportDetails() {
   const [searchParams] = useSearchParams();
   const filter = searchParams.get("filter");
 
-const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("All");
 
 useEffect(() => {
-  const filter = searchParams.get("filter");
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
+}, []);
 
-  if (filter) {
-    setActiveFilter(
-      filter.charAt(0).toUpperCase() +
-        filter.slice(1).toLowerCase()
-    );
-  } else {
-    setActiveFilter("All");
-  }
-}, [searchParams]);
+  useEffect(() => {
+    const filter = searchParams.get("filter");
+    if (filter) {
+      setActiveFilter(
+        filter.charAt(0).toUpperCase() + filter.slice(1).toLowerCase(),
+      );
+    } else {
+      setActiveFilter("All");
+    }
+  }, [searchParams]);
 
   return (
     <div className="relative min-h-screen bg-[#07131F]">
-           <BackgroundEffect variant="report" />
-    
-          <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
-            <ReportHeader />
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <FilterTabs activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-            {/* <InfoCard /> */}
-<TestGrid
-  tests={tests}
-  searchTerm={searchTerm}
-  activeFilter={activeFilter}
-  onViewDetails={setSelectedTest}
-/>
-<TestModal
-  test={selectedTest}
-  onClose={() => setSelectedTest(null)}
-/>
-            {/* <LifestyleCard /> */}
-            {/* <DoctorQuestionsCard /> */}
-          </div>
-        </div>
+      <BackgroundEffect variant="report" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+        <ReportHeader />
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <FilterTabs
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
+        {/* <InfoCard /> */}
+        <TestGrid
+          tests={tests}
+          searchTerm={searchTerm}
+          activeFilter={activeFilter}
+          onViewDetails={setSelectedTest}
+        />
+        <TestModal test={selectedTest} onClose={() => setSelectedTest(null)} />
+        {/* <LifestyleCard /> */}
+        {/* <DoctorQuestionsCard /> */}
+      </div>
+    </div>
   );
 }
 

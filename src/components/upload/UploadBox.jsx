@@ -2,10 +2,13 @@ import UploadButton from "./UploadButton";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
+import { sampleReport } from "../../data/sampleReport";
+import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 function UploadBox() {
+  const { setReport } = useReport();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -46,11 +49,7 @@ function UploadBox() {
   const maxFileSize = 10 * 1024 * 1024;
 
   const validateFile = (file) => {
-    const allowedTypes = [
-      "application/pdf",
-      "image/png",
-      "image/jpeg",
-    ];
+    const allowedTypes = ["application/pdf", "image/png", "image/jpeg"];
 
     if (!allowedTypes.includes(file.type)) {
       setError("Only PDF, JPG and PNG files are allowed.");
@@ -140,7 +139,11 @@ function UploadBox() {
       )}
 
       <button
-  className="
+        onClick={() => {
+          setReport(sampleReport);
+          navigate("/dashboard");
+        }}
+        className="
 mt-6
 inline-flex
 items-center
@@ -164,11 +167,7 @@ hover:text-cyan-200
       </button>
 
       <div className="mt-6">
-        {isAnalyzing ? (
-          <LoadingSpinner />
-        ) : (
-          <FilePreview file={selectedFile} />
-        )}
+        {isAnalyzing ? <LoadingSpinner /> : <FilePreview file={selectedFile} />}
       </div>
 
       {selectedFile && !isAnalyzing && (

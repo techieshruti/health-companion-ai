@@ -1,9 +1,4 @@
-import {
-  FileText,
-  AlertTriangle,
-  Download,
-  Bot,
-} from "lucide-react";
+import { FileText, AlertTriangle, Download, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function QuickActions() {
@@ -38,23 +33,19 @@ function QuickActions() {
 
   return (
     <section className="mt-10">
-
       <div className="mb-6">
-  <p className="text-xs uppercase tracking-[0.25em] text-cyan-400">
-    ACTIONS
-  </p>
+        <p className="text-xs uppercase tracking-[0.25em] text-cyan-400">
+          ACTIONS
+        </p>
 
-  <h2 className="mt-2 text-3xl font-bold text-white">
-    Quick Actions
-  </h2>
+        <h2 className="mt-2 text-3xl font-bold text-white">Quick Actions</h2>
 
-  <p className="mt-2 text-slate-400">
-    Access the most common actions for your health report.
-  </p>
-</div>
+        <p className="mt-2 text-slate-400">
+          Access the most common actions for your health report.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
         {actions.map((action) => (
           <button
             key={action.title}

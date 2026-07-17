@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import AISummary from "../components/dashboard/AISummary";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
@@ -7,6 +8,12 @@ import QuickActions from "../components/dashboard/QuickActions";
 import BackgroundEffect from "../components/common/BackgroundEffect";
 
 function Dashboard() {
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
+}, []);
   return (
     <div className="relative min-h-screen bg-[#07131F]">
        <BackgroundEffect variant="dashboard" />
