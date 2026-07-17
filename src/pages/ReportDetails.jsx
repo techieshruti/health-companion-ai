@@ -1,12 +1,15 @@
+import { useState } from "react";
 import InfoCard from "../components/report/InfoCard";
 import ReportHeader from "../components/report/ReportHeader";
 import TestCard from "../components/report/TestCard";
 import SearchBar from "../components/report/SearchBar";
+import FilterTabs from "../components/report/FilterTabs";
 // import LifestyleCard from "../components/report/LifestyleCard";
 // import DoctorQuestionsCard from "../components/report/DoctorQuestionsCard";
 import BackgroundEffect from "../components/common/BackgroundEffect";
 
 function ReportDetails() {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <div className="relative min-h-screen bg-[#07131F]">
            <BackgroundEffect variant="report" />
@@ -14,6 +17,7 @@ function ReportDetails() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
             <ReportHeader />
             <SearchBar/>
+            <FilterTabs/>
             {/* <InfoCard /> */}
             {/* <TestCard /> */}
             {/* <LifestyleCard /> */}
