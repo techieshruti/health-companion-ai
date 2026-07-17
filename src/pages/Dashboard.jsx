@@ -6,8 +6,12 @@ import HealthScore from "../components/dashboard/HealthScore";
 import NeedsAttention from "../components/dashboard/NeedsAttention";
 import QuickActions from "../components/dashboard/QuickActions";
 import BackgroundEffect from "../components/common/BackgroundEffect";
+import { useReport } from "../context/ReportContext";
 
 function Dashboard() {
+  const { report } = useReport();
+  const tests = report?.tests || [];
+  
   useEffect(() => {
   window.scrollTo({
     top: 0,
@@ -25,7 +29,7 @@ function Dashboard() {
         <SummaryGrid />
         <HealthScore />
         <NeedsAttention />
-        <QuickActions />
+        <QuickActions tests={tests} />
       </div>
     </div>
   );

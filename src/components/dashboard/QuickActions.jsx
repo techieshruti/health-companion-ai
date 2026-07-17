@@ -1,7 +1,8 @@
 import { FileText, AlertTriangle, Download, Bot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { downloadReport } from "../../utils/downloadReport";
 
-function QuickActions() {
+function QuickActions({ tests }) {
   const navigate = useNavigate();
 
   const actions = [
@@ -21,7 +22,7 @@ function QuickActions() {
       icon: <Download size={28} />,
       title: "Download Summary",
       description: "Export PDF report",
-      onClick: () => alert("Coming Soon"),
+      onClick: () => downloadReport(tests),
     },
     {
       icon: <Bot size={28} />,
