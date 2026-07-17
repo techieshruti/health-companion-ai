@@ -8,6 +8,7 @@ import TestGrid from "../components/report/TestGrid";
 // import LifestyleCard from "../components/report/LifestyleCard";
 // import DoctorQuestionsCard from "../components/report/DoctorQuestionsCard";
 import BackgroundEffect from "../components/common/BackgroundEffect";
+import TestModal from "../components/report/TestModal";
 
 const tests = [
   {
@@ -72,6 +73,10 @@ function ReportDetails() {
   searchTerm={searchTerm}
   activeFilter={activeFilter}
   onViewDetails={setSelectedTest}
+/>
+<TestModal
+  test={selectedTest}
+  onClose={() => setSelectedTest(null)}
 />
             {/* <LifestyleCard /> */}
             {/* <DoctorQuestionsCard /> */}

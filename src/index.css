@@ -43,3 +43,27 @@
   transform-origin: center;
   will-change: transform;
 }
+
+
+.modal-scrollbar {
+  scrollbar-width:initial;
+  scrollbar-color: #5b6472 transparent;
+}
+
+/* Chrome, Edge */
+.modal-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  background: #5b6472;
+  border-radius: 999px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #768192;
+}

@@ -98,6 +98,7 @@ function TestCard({ test, onViewDetails }) {
           gap-2
           text-sm
           font-medium
+          cursor-pointer
           text-cyan-300
           transition-colors
           hover:text-white
