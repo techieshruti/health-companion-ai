@@ -140,16 +140,24 @@ function UploadBox() {
       )}
 
       <button
-        className="
-mt-7
+  className="
+mt-6
 inline-flex
 items-center
+rounded-xl
+border
+border-cyan-400/20
+bg-white/5
+px-5
+py-2.5
 text-cyan-300
-hover:text-cyan-200
-transition-all
-duration-300
 font-medium
-hover:translate-x-1
+transition-all
+cursor-pointer
+duration-300
+hover:bg-cyan-500/10
+hover:border-cyan-400/40
+hover:text-cyan-200
 "
       >
         Try Sample Report
