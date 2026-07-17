@@ -1,4 +1,4 @@
-function SummaryCard({ icon, title, value }) {
+function SummaryCard({ icon, title, value, color, bg }) {
   const Icon = icon;
   return (
     <div
@@ -23,21 +23,19 @@ function SummaryCard({ icon, title, value }) {
 
         {/* Icon */}
         <div
-          className="
-            flex
-            h-12
-            w-12
-            items-center
-            justify-center
-            rounded-xl
-            border
-            border-cyan-400/20
-            bg-cyan-400/10
-            text-2xl
-            shadow-inner
-          "
+          className={`
+flex
+h-12
+w-12
+items-center
+justify-center
+rounded-xl
+border
+border-white/10
+${bg}
+`}
         >
-         <Icon className="w-7 h-7"/>
+        <Icon className={`w-7 h-7 ${color}`} />
         </div>
 
         {/* Number */}
