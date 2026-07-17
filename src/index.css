@@ -44,7 +44,7 @@
   will-change: transform;
 }
 
-
+/* Modal scrollbar */
 .modal-scrollbar {
   scrollbar-width:initial;
   scrollbar-color: #5b6472 transparent;
@@ -66,4 +66,21 @@
 
 .modal-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #768192;
+}
+
+/* Report Card Fade Animation */
+@keyframes reportCardFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.report-card {
+  animation: reportCardFade 1s ease-in-out;
 }

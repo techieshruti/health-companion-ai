@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoCard from "../components/report/InfoCard";
 import ReportHeader from "../components/report/ReportHeader";
 import TestCard from "../components/report/TestCard";
@@ -9,6 +9,7 @@ import TestGrid from "../components/report/TestGrid";
 // import DoctorQuestionsCard from "../components/report/DoctorQuestionsCard";
 import BackgroundEffect from "../components/common/BackgroundEffect";
 import TestModal from "../components/report/TestModal";
+import { useSearchParams } from "react-router-dom";
 
 const tests = [
   {
@@ -57,8 +58,25 @@ const tests = [
 
 function ReportDetails() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
   const [selectedTest, setSelectedTest] = useState(null);
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get("filter");
+
+const [activeFilter, setActiveFilter] = useState("All");
+
+useEffect(() => {
+  const filter = searchParams.get("filter");
+
+  if (filter) {
+    setActiveFilter(
+      filter.charAt(0).toUpperCase() +
+        filter.slice(1).toLowerCase()
+    );
+  } else {
+    setActiveFilter("All");
+  }
+}, [searchParams]);
+
   return (
     <div className="relative min-h-screen bg-[#07131F]">
            <BackgroundEffect variant="report" />
