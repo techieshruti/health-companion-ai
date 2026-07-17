@@ -1,13 +1,14 @@
 import SummaryCard from "./SummaryCard";
+import { FileText, TestTubeDiagonal, CircleCheckBig, TriangleAlert, CircleArrowDown, CircleMinus } from 'lucide-react';
 
 function SummaryGrid() {
   const summaryData = [
-  { id: 1, icon: "📄", title: "Pages", value: 5 },
-  { id: 2, icon: "🧪", title: "Tests Found", value: 42 },
-  { id: 3, icon: "🟢", title: "Normal", value: 30 },
-  { id: 4, icon: "🔴", title: "High", value: 5 },
-  { id: 5, icon: "🔵", title: "Low", value: 3 },
-  { id: 6, icon: "🟡", title: "Borderline", value: 4 },
+  { id: 1, icon: FileText, title: "Pages", value: 5 },
+  { id: 2, icon: TestTubeDiagonal , title: "Tests Found", value: 42 },
+  { id: 3, icon: CircleCheckBig , title: "Normal", value: 30 },
+  { id: 4, icon: TriangleAlert , title: "High", value: 5 },
+  { id: 5, icon: CircleArrowDown , title: "Low", value: 3 },
+  { id: 6, icon: CircleMinus , title: "Borderline", value: 4 },
 ];
 
   return (

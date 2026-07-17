@@ -1,4 +1,5 @@
 function SummaryCard({ icon, title, value }) {
+  const Icon = icon;
   return (
     <div
       className="
@@ -36,7 +37,7 @@ function SummaryCard({ icon, title, value }) {
             shadow-inner
           "
         >
-          {icon}
+         <Icon className="w-7 h-7"/>
         </div>
 
         {/* Number */}
