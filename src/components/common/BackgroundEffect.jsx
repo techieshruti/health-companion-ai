@@ -44,6 +44,7 @@ const colors = [
     "○",
     "✚",
     "⌁",
+    "🧬",
   ];
 
   const icon = icons[particle.id % icons.length];
