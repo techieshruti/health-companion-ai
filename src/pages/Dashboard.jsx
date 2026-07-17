@@ -19,7 +19,6 @@ function Dashboard() {
         <HealthScore />
         <NeedsAttention />
         <QuickActions />
-
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ function AISummary() {
       {/* Left Accent */}
       <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-cyan-400 to-blue-500"></div>
 
-      <div className="p-8">
+      <div className="p-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-start">
 
           {/* AI Icon */}
@@ -64,11 +64,11 @@ function AISummary() {
               AI Generated Summary
             </span>
 
-            <h2 className="mt-4 text-3xl font-bold text-white">
+            <h2 className="mt-3 text-3xl font-bold text-white">
               Health Report Overview
             </h2>
 
-            <p className="mt-4 leading-8 text-slate-300">
+            <p className="mt-2 leading-8 text-slate-300">
               Your report contains{" "}
               <span className="font-semibold text-white">
                 42 tests
