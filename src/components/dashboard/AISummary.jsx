@@ -1,3 +1,4 @@
+import { Bot } from 'lucide-react';
 function AISummary() {
   return (
     <div
@@ -36,7 +37,7 @@ function AISummary() {
               shadow-inner
             "
           >
-            🤖
+          <Bot className="h-9 w-9 text-cyan-300 ai-pulse" />
           </div>
 
           {/* Content */}

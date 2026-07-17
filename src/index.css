@@ -11,21 +11,35 @@
 }
 
 @keyframes floatParticle {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.15;
+  }
 
-0%,100%{
-
-transform:translateY(0px) translateX(0px) scale(1);
-
-opacity:.15;
-
+  50% {
+    transform: translateY(-35px) translateX(12px) scale(1.15);
+    opacity: 0.45;
+  }
 }
 
-50%{
-
-transform:translateY(-35px) translateX(12px) scale(1.15);
-
-opacity:.45;
-
+/* AI Summary Icon Pulse Animation */
+@keyframes aiPulse {
+  0%,
+  20%,
+  40%,
+  60%,
+  92%,
+  100% {
+    transform: scale(1);
+  }
+  96% {
+    transform: scale(1.10);
+  }
 }
 
+.ai-pulse {
+  animation: aiPulse 2s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
 }
