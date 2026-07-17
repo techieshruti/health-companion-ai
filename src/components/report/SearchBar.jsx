@@ -5,7 +5,13 @@ function SearchBar({ searchTerm, setSearchTerm }) {
     <div className="relative mb-8">
       <Search
         size={20}
-        className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500"
+        className="absolute
+      left-5
+      top-1/2
+      z-10
+      -translate-y-1/2
+      text-slate-400
+      pointer-events-none"
       />
 
       <input
