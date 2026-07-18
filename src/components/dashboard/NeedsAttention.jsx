@@ -1,4 +1,5 @@
 import { AlertTriangle, ChevronRight } from "lucide-react";
+import { useReport } from "../../context/ReportContext";
 
 const attentionTests = [
   {
@@ -22,6 +23,12 @@ const attentionTests = [
 ];
 
 function NeedsAttention() {
+  const { report } = useReport();
+  const abnormalTests =
+  report?.tests.filter(
+    (test) => test.status !== "Normal"
+  ) || [];
+
   return (
     <section className="mt-10">
 
@@ -40,7 +47,7 @@ function NeedsAttention() {
       </div>
 
       <div className="space-y-4">
-        {attentionTests.map((test) => (
+        {abnormalTests.map((test) => (
           <div
             key={test.name}
             className="

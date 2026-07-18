@@ -1,7 +1,9 @@
 import { HeartPulse } from "lucide-react";
+import { useReport } from "../../context/ReportContext";
 
 function HealthScore() {
-  const score = 82;
+  const { report } = useReport();
+  const score = report?.healthScore ?? 0;
 
   return (
     <section className="mt-10">

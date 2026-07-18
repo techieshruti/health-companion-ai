@@ -6,13 +6,20 @@ export const sampleReport = {
     reportDate: "18 Jul 2026",
   },
 
+  healthScore: 82,
+
   summary: {
+    pages: 5,
     totalTests: 20,
     normal: 15,
     high: 2,
     low: 2,
     borderline: 1,
-    healthScore: 82,
+    abnormalTests: [
+      "Vitamin D",
+      "TSH",
+      "LDL Cholesterol",
+    ],
   },
 
   tests: [

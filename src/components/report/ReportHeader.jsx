@@ -51,7 +51,7 @@ function ReportHeader() {
           "
         >
           <ArrowLeft size={18} />
-          Back to Home
+          Back to dashboard
         </button>
       </div>
     </div>

@@ -1,5 +1,11 @@
 import { Bot } from 'lucide-react';
+import { useReport } from "../../context/ReportContext";
+
 function AISummary() {
+  const { report } = useReport();
+  const totalTests = report?.summary.totalTests;
+const abnormal = report?.summary.abnormalTests || [];
+
   return (
     <div
       className="
@@ -71,19 +77,19 @@ function AISummary() {
             <p className="mt-2 leading-8 text-slate-300">
               Your report contains{" "}
               <span className="font-semibold text-white">
-                42 tests
+                {totalTests} tests
               </span>
               . Most values are within the normal range. However,
               <span className="font-semibold text-cyan-300">
-                {" "}Vitamin D{" "}
+                {" "}{abnormal[0]}{" "}
               </span>
               is low,
               <span className="font-semibold text-cyan-300">
-                {" "}TSH{" "}
+                {" "}{abnormal[1]}{" "}
               </span>
               is slightly elevated, and
               <span className="font-semibold text-cyan-300">
-                {" "}LDL cholesterol{" "}
+                {" "}{abnormal[2]}{" "}
               </span>
               requires attention. No critical abnormalities were detected.
 
