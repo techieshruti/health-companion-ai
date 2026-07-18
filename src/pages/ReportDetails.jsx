@@ -9,6 +9,7 @@ import BackgroundEffect from "../components/common/BackgroundEffect";
 import TestModal from "../components/report/TestModal";
 import { useSearchParams } from "react-router-dom";
 import { useReport } from "../context/ReportContext";
+import { ChevronUp  } from "lucide-react";
 
 function ReportDetails() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,6 +39,26 @@ useEffect(() => {
     }
   }, [searchParams]);
 
+// bottom to top arrow
+const [showScrollTop, setShowScrollTop] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setShowScrollTop(window.scrollY > 300);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
   return (
     <div className="relative min-h-screen bg-[#07131F]">
       <BackgroundEffect variant="report" />
@@ -58,6 +79,39 @@ useEffect(() => {
         />
         <TestModal test={selectedTest} onClose={() => setSelectedTest(null)} />
       </div>
+{showScrollTop && (
+  <button
+    onClick={scrollToTop}
+    aria-label="Scroll to top"
+    className="
+      fixed
+      bottom-5
+      right-2
+      z-50
+      flex
+      h-11
+      w-11
+      items-center
+      justify-center
+      rounded-full
+      border
+      border-cyan-400/20
+      bg-slate-800/90
+      backdrop-blur-xl
+      text-cyan-400
+      shadow-[0_0_18px_rgba(34,211,238,0.18)]
+      transition-all
+      duration-300
+      hover:-translate-y-1
+      hover:border-cyan-400/50
+      hover:bg-slate-700
+      hover:text-white
+      hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]
+    "
+  >
+    <ChevronUp size={18} strokeWidth={2.5} />
+  </button>
+)}
     </div>
   );
 }
