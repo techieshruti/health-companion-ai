@@ -5,7 +5,7 @@ function InvalidReportModal({ open, onClose, onTryAgain }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6"
       onClick={onClose}
     >
       <div
@@ -15,7 +15,7 @@ function InvalidReportModal({ open, onClose, onTryAgain }) {
           max-w-xl
           rounded-3xl
           border
-          border-red-500/20
+          border-cyan-500/20
           bg-[#0D1B2A]
           p-8
           shadow-[0_20px_60px_rgba(0,0,0,0.45)]
@@ -100,23 +100,25 @@ function InvalidReportModal({ open, onClose, onTryAgain }) {
 
           <button
             onClick={onTryAgain}
-            className="
-              mt-8
-              flex
-              w-full
-              items-center
-              justify-center
-              gap-2
-              rounded-xl
-              bg-cyan-500
-              py-3
-              font-medium
-              text-white
-              transition
-              hover:bg-cyan-400
-            "
+            className="mt-6 inline-flex
+items-center
+justify-center
+rounded-2xl
+bg-gradient-to-r
+from-blue-600
+via-sky-500
+to-cyan-500
+px-7
+py-4
+font-semibold
+cursor-pointer
+text-white
+shadow-lg
+shadow-cyan-500/20
+hover:shadow-cyan-400/40
+active:scale-[0.98]"
           >
-            <Upload size={18} />
+            <Upload size={18} className="mr-2" />
             Upload Another Report
           </button>
 

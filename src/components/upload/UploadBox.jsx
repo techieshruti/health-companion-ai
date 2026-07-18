@@ -6,14 +6,12 @@ import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
-import InvalidReportModal from "./InvalidReportModal";
 
-function UploadBox() {
+function UploadBox({ onInvalidReport }) {
   const { setReport } = useReport();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [showInvalidModal, setShowInvalidModal] = useState(false);
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -81,21 +79,12 @@ function UploadBox() {
 
     setTimeout(() => {
       setIsAnalyzing(false);
+      onInvalidReport();
       // navigate("/dashboard");
-      setShowInvalidModal(true);
     }, 2000);
   };
 
-  const handleReset = () => {
-  setSelectedFile(null);
-  setError("");
-  setShowInvalidModal(false);
-
-  if (fileInputRef.current) {
-    fileInputRef.current.value = "";
-  }
-};
-
+ 
   return (
     <div
       className="
@@ -216,19 +205,7 @@ active:scale-[0.98]
         </button>
       )}
 
-      <InvalidReportModal
-    open={showInvalidModal}
-    onClose={(handleReset)}
-    onTryAgain={(handleReset) => {
-        setSelectedFile(null);
-        setError("");
-        setShowInvalidModal(false);
 
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
-    }}
-/>
     </div>
   );
 }

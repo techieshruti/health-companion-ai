@@ -7,6 +7,11 @@ import { useState } from "react";
 import InvalidReportModal from "../components/upload/InvalidReportModal";
 
 function Home() {
+  const [showInvalidModal, setShowInvalidModal] = useState(false);
+const handleReset = () => {
+  setShowInvalidModal(false);
+};
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#07142A] text-white">
       {/* Animated Medical Background */}
@@ -31,8 +36,13 @@ function Home() {
 
         {/* Upload Card */}
         <div className="mt-14 w-full flex justify-center">
-          <UploadBox />
+          <UploadBox onInvalidReport={() => setShowInvalidModal(true)}/>
         </div>
+        <InvalidReportModal
+  open={showInvalidModal}
+  onClose={handleReset}
+  onTryAgain={handleReset}
+/>
         {/* Feature Cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
 
