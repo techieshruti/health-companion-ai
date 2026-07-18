@@ -9,7 +9,7 @@ export async function extractPdfText(file) {
   const pdf = await pdfjsLib.getDocument({
     data: arrayBuffer,
   }).promise;
-
+const totalPages = pdf.numPages;
   let fullText = "";
 
   for (let pageNo = 1; pageNo <= pdf.numPages; pageNo++) {
@@ -24,5 +24,8 @@ export async function extractPdfText(file) {
     fullText += pageText + "\n";
   }
 
-  return fullText;
+  return {
+  text: fullText,
+  totalPages,
+};;
 }

@@ -11,7 +11,7 @@ const summary = report?.summary;
     id: 1,
     icon: FileText,
     title: "Pages",
-    value:summary?.pages ?? 0,
+    value:report?.summary?.totalPages ?? 0,
     color: "text-slate-300",
     bg: "bg-slate-500/10",
   },

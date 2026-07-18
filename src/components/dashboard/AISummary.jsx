@@ -8,6 +8,54 @@ const [first, second, third] = summary?.abnormalTests ?? [];
   const totalTests = summary?.totalTests;
 const abnormal = summary?.abnormalTests || [];
 
+const abnormalTests =
+  report?.tests?.filter(test => test.status !== "Normal") || [];
+
+const renderSummary = () => {
+  const text = summary?.overallSummary || "";
+
+  const abnormalNames =
+    report?.tests
+      ?.filter((test) => test.status !== "Normal")
+      .map((test) =>
+        test.name
+          .replace(/\s*-\s*Serum/i, "")
+          .replace(/\s*Total-25 Hydroxy/i, "")
+          .trim()
+      ) || [];
+
+  if (!abnormalNames.length) return text;
+
+  // Escape regex special characters
+  const escapedNames = abnormalNames.map((name) =>
+    name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  );
+
+  const regex = new RegExp(
+    `(${escapedNames.join("|")})`,
+    "gi"
+  );
+
+  return text.split(regex).map((part, index) => {
+    const matched = abnormalNames.find(
+      (name) => name.toLowerCase() === part.toLowerCase()
+    );
+
+    if (matched) {
+      return (
+        <span
+          key={index}
+          className="font-semibold text-cyan-300"
+        >
+          {part}
+        </span>
+      );
+    }
+
+    return part;
+  });
+};
+
   return (
     <div
       className="
@@ -77,8 +125,8 @@ const abnormal = summary?.abnormalTests || [];
       Health Report Overview
     </h2>
 
-    <p className="mt-2 leading-8 text-slate-300">
-              Your report contains{" "}
+    {/* <p className="mt-2 leading-8 text-slate-300">
+              {report.summary.overallSummary}
               <span className="font-semibold text-white">
                 {summary?.totalTests} tests
               </span>
@@ -96,7 +144,10 @@ const abnormal = summary?.abnormalTests || [];
               </span>
               requires attention. No critical abnormalities were detected.
 
-            </p>
+            </p> */}
+            <p className="mt-4 leading-8 text-slate-300">
+  {renderSummary()}
+</p>
 
   </div>
 

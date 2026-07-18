@@ -3,7 +3,7 @@ import { useReport } from "../../context/ReportContext";
 
 function HealthScore() {
   const { report } = useReport();
-  const score = report?.healthScore ?? 0;
+const score = report?.summary?.healthScore ?? 0;
 
   const label =
   score >= 90
@@ -60,7 +60,7 @@ function HealthScore() {
                 text-red-400
               "
             >
-              <HeartPulse size={30} />
+              <HeartPulse size={30} className="text-red-400 ai-pulse"/>
             </div>
 
             <div>

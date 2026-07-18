@@ -478,25 +478,11 @@ doc.text(
 );
 
     // Recommendation
-    let recommendation="Consult your healthcare provider.";
-
-    if(test.name.includes("Vitamin D")){
-      recommendation="Get 15-20 min sunlight & eat fortified foods.";
-    }
-
-    if(test.name.includes("TSH")){
-      recommendation="Monitor thyroid levels and consult your doctor.";
-    }
-
-    if(test.name.includes("LDL")){
-      recommendation="Reduce saturated fats and exercise regularly.";
-    }
-
     doc.setTextColor(110);
     doc.setFontSize(9.5);
 
     doc.text(
-      recommendation,
+      test.recommendation,
       cardX + 6,
       cardY + 36,
       {

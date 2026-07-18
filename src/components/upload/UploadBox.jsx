@@ -1,4 +1,5 @@
 import UploadButton from "./UploadButton";
+import { analyzeReport } from "../../services/openai";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
@@ -8,7 +9,17 @@ import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { extractPdfText } from "../../utils/extractPdfText";
 
+const loadingMessages = [
+  "Extracting text...",
+  "Reading blood report...",
+  "Understanding your health...",
+  "Generating AI insights...",
+  "Preparing dashboard..."
+];
+
 function UploadBox({ onInvalidReport }) {
+  const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
+  const analyzeButtonRef = useRef(null);
   const { setReport } = useReport();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
@@ -30,11 +41,16 @@ function UploadBox({ onInvalidReport }) {
 
     if (validateFile(file)) {
       setSelectedFile(file);
+      setTimeout(() => {
+  analyzeButtonRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}, 200);
       setError("");
     } else {
       setSelectedFile(null);
     }
-    
   };
 
   // drag and drop handler
@@ -43,6 +59,12 @@ function UploadBox({ onInvalidReport }) {
 
     if (validateFile(file)) {
       setSelectedFile(file);
+      setTimeout(() => {
+  analyzeButtonRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}, 150);
       setError("");
     } else {
       setSelectedFile(null);
@@ -61,7 +83,7 @@ function UploadBox({ onInvalidReport }) {
     }
 
     if (file.size > maxFileSize) {
-      setError("File size should not exceed 10 MB.");
+      setError("File size should not exceed 20 MB.");
       return false;
     }
 
@@ -70,41 +92,46 @@ function UploadBox({ onInvalidReport }) {
   };
 
   // handle analyze report
- const handleAnalyzeReport = async () => {
-  if (!selectedFile) {
-    setError("Please select a file.");
-    return;
-  }
-
-  setIsAnalyzing(true);
-
-  try {
-    let extractedText = "";
-
-    if (selectedFile.type === "application/pdf") {
-      extractedText = await extractPdfText(selectedFile);
-    } else {
-      extractedText = "Image uploaded";
+  const handleAnalyzeReport = async () => {
+    if (!selectedFile) {
+      setError("Please select a file.");
+      return;
     }
 
-    console.log("Extracted Text:");
-    console.log(extractedText);
-    alert(extractedText.substring(0, 500));
+    setIsAnalyzing(true);
+let messageIndex = 0;
 
-    setReport({
-      rawText: extractedText,
-    });
+setLoadingMessage(loadingMessages[0]);
 
-    navigate("/dashboard");
-  } catch (error) {
-    console.error(error);
+const loadingInterval = setInterval(() => {
+  messageIndex++;
 
-    setError("Unable to read this report.");
-  } finally {
-    setIsAnalyzing(false);
+  if (messageIndex < loadingMessages.length) {
+    setLoadingMessage(loadingMessages[messageIndex]);
   }
-};
- 
+}, 1800);
+
+    try {
+      let extractedText = "";
+
+      const { text, totalPages } = await extractPdfText(selectedFile);
+
+      const report = await analyzeReport(text);
+
+      report.summary.totalPages = totalPages;
+
+      setReport(report);
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
+      onInvalidReport();
+    } finally {
+      setIsAnalyzing(false);
+      clearInterval(loadingInterval);
+    }
+  };
+
   return (
     <div
       className="
@@ -165,8 +192,8 @@ function UploadBox({ onInvalidReport }) {
 
       <button
         onClick={() => {
-           setError("");
-  setSelectedFile(null);
+          setError("");
+          setSelectedFile(null);
           setReport(sampleReport);
           navigate("/dashboard");
         }}
@@ -194,11 +221,16 @@ hover:text-cyan-200
       </button>
 
       <div className="mt-6">
-        {isAnalyzing ? <LoadingSpinner /> : <FilePreview file={selectedFile} />}
+        {isAnalyzing ? (
+  <LoadingSpinner message={loadingMessage} />
+) : (
+  <FilePreview file={selectedFile} />
+)}
       </div>
 
       {selectedFile && !isAnalyzing && (
         <button
+        ref={analyzeButtonRef}
           onClick={handleAnalyzeReport}
           className="
 mt-8
@@ -224,8 +256,6 @@ active:scale-[0.98]
           Analyze Report
         </button>
       )}
-
-
     </div>
   );
 }

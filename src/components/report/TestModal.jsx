@@ -1,4 +1,4 @@
-import { X, Bot, TriangleAlert, Lightbulb, MessageCircle } from "lucide-react";
+import { X, Bot, TriangleAlert, Lightbulb, MessageCircle, Salad } from "lucide-react";
 import { useEffect } from "react";
 
 const statusStyles = {
@@ -9,7 +9,7 @@ const statusStyles = {
 };
 
 function TestModal({ test, onClose }) {
-   if (!test) return null;
+  if (!test) return null;
   const badgeStyle = statusStyles[test.status] || statusStyles.Normal;
 
   return (
@@ -105,17 +105,7 @@ function TestModal({ test, onClose }) {
               </div>
 
               <div className="rounded-2xl bg-white/5 p-6">
-                <p className="leading-8 text-slate-300">
-                  Your{" "}
-                  <span className="font-semibold text-white">{test.name}</span>{" "}
-                  value is{" "}
-                  <span className="font-semibold text-cyan-300">
-                    {test.status.toLowerCase()}
-                  </span>
-                  . This may indicate an imbalance that could require lifestyle
-                  changes or medical guidance. Please consult a healthcare
-                  professional before making medical decisions.
-                </p>
+                <p className="leading-8 text-slate-300">{test.explanation}</p>
               </div>
             </section>
 
@@ -129,31 +119,74 @@ function TestModal({ test, onClose }) {
                   Possible Causes
                 </h3>
               </div>
-
-              <ul className="space-y-3 text-slate-300">
-                <li>• Poor diet or nutritional deficiency</li>
-                <li>• Lifestyle habits</li>
-                <li>• Underlying medical conditions</li>
-              </ul>
+              <div className="rounded-2xl bg-white/5 p-6">
+                <ul className="space-y-3 text-slate-300">
+                  {test.reason?.map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
             </section>
 
             {/* Lifestyle */}
 
             <section className="mt-10">
               <div className="mb-4 flex items-center gap-3">
-                <Lightbulb className="text-green-400" size={22} />
-
+                <Salad className="text-green-400" size={22} />
                 <h3 className="text-2xl font-semibold text-white">
-                  Lifestyle Tips
+                  Foods & Lifestyle
                 </h3>
               </div>
 
-              <ul className="space-y-3 text-slate-300">
-                <li>• Eat a balanced diet.</li>
-                <li>• Exercise regularly.</li>
-                <li>• Stay hydrated.</li>
-                <li>• Get enough sleep.</li>
-              </ul>
+              <div className="rounded-2xl bg-white/5 p-6">
+                <h4 className="mb-3 text-slate-300 font-semibold">
+                  Recommended Foods
+                </h4>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {test.foods?.map((food) => (
+                    <span
+                      key={food}
+                      className="rounded-full bg-emerald-500/10 border border-emerald-400/20 px-3 py-1 text-sm text-emerald-300"
+                    >
+                      {food}
+                    </span>
+                  ))}
+                </div>
+
+                <h4 className="mb-3 text-slate-300 font-semibold">Exercise</h4>
+
+                <div className="flex flex-wrap gap-2">
+                  {test.exercise?.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full bg-violet-500/10 border border-violet-400/20 px-3 py-1 text-sm text-violet-300"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Doctor Advice */}
+
+            <section className="mt-10">
+              <div className="mb-4 flex items-center gap-3">
+                <Lightbulb className="text-amber-400" size={22} />
+
+                <h3 className="text-2xl font-semibold text-white">
+                  Doctor Advice
+                </h3>
+              </div>
+
+              <div className="rounded-2xl bg-white/5 p-6">
+                <ul className="space-y-3 text-slate-300">
+                  {test.doctorAdvice?.map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
             </section>
 
             {/* Doctor */}
@@ -167,11 +200,13 @@ function TestModal({ test, onClose }) {
                 </h3>
               </div>
 
-              <ul className="space-y-3 text-slate-300">
-                <li>• What could be causing this result?</li>
-                <li>• Do I need more tests?</li>
-                <li>• Should I change my diet?</li>
-              </ul>
+              <div className="rounded-2xl bg-white/5 p-6">
+                <ul className="space-y-3 text-slate-300">
+                  {test.questionsToAsk?.map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
             </section>
 
             {/* Disclaimer */}
