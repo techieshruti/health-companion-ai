@@ -85,6 +85,7 @@ hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
 
       {/* Button */}
       <button
+      onClick={() => onViewDetails(test)}
         className="
     group
     flex

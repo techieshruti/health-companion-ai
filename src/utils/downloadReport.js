@@ -18,7 +18,7 @@ export function downloadReport(report) {
   doc.setFontSize(14);
   doc.text("Health Score", 14, 48);
   doc.setFontSize(24);
-  doc.text("82 / 100", 14, 60);
+ doc.text(`${report?.healthScore ?? 0} / 100`, 14, 60);
 
   // AI Summary
   doc.setFontSize(14);

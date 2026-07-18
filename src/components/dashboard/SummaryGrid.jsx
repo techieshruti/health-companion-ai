@@ -1,13 +1,17 @@
 import SummaryCard from "./SummaryCard";
 import { FileText, TestTubeDiagonal, CircleCheckBig, TriangleAlert, CircleArrowDown, CircleMinus } from 'lucide-react';
+import { useReport } from "../../context/ReportContext";
 
 function SummaryGrid() {
+  const { report } = useReport();
+const summary = report?.summary;
+
  const summaryData = [
   {
     id: 1,
     icon: FileText,
     title: "Pages",
-    value: 5,
+    value:summary?.pages ?? 0,
     color: "text-slate-300",
     bg: "bg-slate-500/10",
   },
@@ -15,7 +19,7 @@ function SummaryGrid() {
     id: 2,
     icon: TestTubeDiagonal,
     title: "Tests Found",
-    value: 42,
+    value:summary?.totalTests ?? 0,
     color: "text-cyan-400",
     bg: "bg-cyan-500/10",
   },
@@ -23,7 +27,7 @@ function SummaryGrid() {
     id: 3,
     icon: CircleCheckBig,
     title: "Normal",
-    value: 30,
+    value:summary?.normal ?? 0,
     color: "text-green-500",
     bg: "bg-emerald-500/10",
   },
@@ -31,7 +35,7 @@ function SummaryGrid() {
     id: 4,
     icon: TriangleAlert,
     title: "High",
-    value: 5,
+    value:summary?.high ?? 0,
     color: "text-red-400",
     bg: "bg-red-500/10",
   },
@@ -39,7 +43,7 @@ function SummaryGrid() {
     id: 5,
     icon: CircleArrowDown,
     title: "Low",
-    value: 3,
+    value:summary?.low ?? 0,
     color: "text-sky-400",
     bg: "bg-sky-500/10",
   },
@@ -47,7 +51,7 @@ function SummaryGrid() {
     id: 6,
     icon: CircleMinus,
     title: "Borderline",
-    value: 4,
+    value:summary?.borderline ?? 0,
     color: "text-amber-400",
     bg: "bg-amber-500/10",
   },

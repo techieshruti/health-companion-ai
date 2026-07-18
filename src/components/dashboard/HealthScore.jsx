@@ -5,6 +5,15 @@ function HealthScore() {
   const { report } = useReport();
   const score = report?.healthScore ?? 0;
 
+  const label =
+  score >= 90
+    ? "Excellent"
+    : score >= 75
+    ? "Good"
+    : score >= 60
+    ? "Fair"
+    : "Needs Attention";
+
   return (
     <section className="mt-10">
       <div className="mb-6">
@@ -75,7 +84,7 @@ function HealthScore() {
               </span>
 
               <span className="mb-1 text-cyan-300 font-medium">
-                Good
+                {label}
               </span>
             </div>
 
