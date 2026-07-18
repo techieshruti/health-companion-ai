@@ -26,8 +26,10 @@ const attentionTests = [
 function NeedsAttention() {
   const navigate = useNavigate();
   const { report } = useReport();
-  const abnormalTests =
-    report?.tests.filter((test) => test.status !== "Normal") || [];
+ const abnormalTests =
+  report?.tests?.filter(
+    (test) => test.status !== "Normal"
+  ) || [];
 
   return (
     <section className="mt-10">

@@ -6,6 +6,7 @@ import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { extractPdfText } from "../../utils/extractPdfText";
 
 function UploadBox({ onInvalidReport }) {
   const { setReport } = useReport();
@@ -69,21 +70,40 @@ function UploadBox({ onInvalidReport }) {
   };
 
   // handle analyze report
-  const handleAnalyzeReport = () => {
-    if (!selectedFile) {
-      setError("Please select a file to analyze.");
-      return;
+ const handleAnalyzeReport = async () => {
+  if (!selectedFile) {
+    setError("Please select a file.");
+    return;
+  }
+
+  setIsAnalyzing(true);
+
+  try {
+    let extractedText = "";
+
+    if (selectedFile.type === "application/pdf") {
+      extractedText = await extractPdfText(selectedFile);
+    } else {
+      extractedText = "Image uploaded";
     }
 
-    setIsAnalyzing(true);
+    console.log("Extracted Text:");
+    console.log(extractedText);
+    alert(extractedText.substring(0, 500));
 
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      onInvalidReport();
-      // navigate("/dashboard");
-    }, 2000);
-  };
+    setReport({
+      rawText: extractedText,
+    });
 
+    navigate("/dashboard");
+  } catch (error) {
+    console.error(error);
+
+    setError("Unable to read this report.");
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
  
   return (
     <div
