@@ -3,6 +3,8 @@ import MedicalWave from "../components/common/MedicalWave";
 import { NotepadText } from 'lucide-react';
 import { HeartPulse } from 'lucide-react';
 import { Bot } from 'lucide-react';
+import { useState } from "react";
+import InvalidReportModal from "../components/upload/InvalidReportModal";
 
 function Home() {
   return (
@@ -31,7 +33,6 @@ function Home() {
         <div className="mt-14 w-full flex justify-center">
           <UploadBox />
         </div>
-
         {/* Feature Cards */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
 

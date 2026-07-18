@@ -6,12 +6,14 @@ import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
 import LoadingSpinner from "../common/LoadingSpinner";
+import InvalidReportModal from "./InvalidReportModal";
 
 function UploadBox() {
   const { setReport } = useReport();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showInvalidModal, setShowInvalidModal] = useState(false);
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -29,9 +31,11 @@ function UploadBox() {
 
     if (validateFile(file)) {
       setSelectedFile(file);
+      setError("");
     } else {
       setSelectedFile(null);
     }
+    
   };
 
   // drag and drop handler
@@ -40,6 +44,7 @@ function UploadBox() {
 
     if (validateFile(file)) {
       setSelectedFile(file);
+      setError("");
     } else {
       setSelectedFile(null);
     }
@@ -76,9 +81,20 @@ function UploadBox() {
 
     setTimeout(() => {
       setIsAnalyzing(false);
-      navigate("/dashboard");
+      // navigate("/dashboard");
+      setShowInvalidModal(true);
     }, 2000);
   };
+
+  const handleReset = () => {
+  setSelectedFile(null);
+  setError("");
+  setShowInvalidModal(false);
+
+  if (fileInputRef.current) {
+    fileInputRef.current.value = "";
+  }
+};
 
   return (
     <div
@@ -140,6 +156,8 @@ function UploadBox() {
 
       <button
         onClick={() => {
+           setError("");
+  setSelectedFile(null);
           setReport(sampleReport);
           navigate("/dashboard");
         }}
@@ -197,6 +215,20 @@ active:scale-[0.98]
           Analyze Report
         </button>
       )}
+
+      <InvalidReportModal
+    open={showInvalidModal}
+    onClose={(handleReset)}
+    onTryAgain={(handleReset) => {
+        setSelectedFile(null);
+        setError("");
+        setShowInvalidModal(false);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    }}
+/>
     </div>
   );
 }
