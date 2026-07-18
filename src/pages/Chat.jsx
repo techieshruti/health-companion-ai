@@ -13,6 +13,8 @@ import {
 import BackgroundEffect from "../components/common/BackgroundEffect";
 
 const Chat = () => {
+  const [input, setInput] = useState("");
+
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -34,6 +36,14 @@ You can ask me about:
   const [isTyping, setIsTyping] = useState(false);
 
   const messagesRef = useRef(null);
+
+  const sendMessage = () => {
+  if (!input.trim()) return;
+
+  askQuestion(input);
+
+  setInput("");
+};
 
   useEffect(() => {
     messagesRef.current?.scrollTo({
@@ -108,7 +118,11 @@ You can ask me about:
           {/* Fixed Input */}
 
           <div className="border-t border-cyan-400/10 p-5">
-            <ChatInput />
+            <ChatInput
+    input={input}
+    setInput={setInput}
+    onSend={sendMessage}
+/>
           </div>
 
         </div>

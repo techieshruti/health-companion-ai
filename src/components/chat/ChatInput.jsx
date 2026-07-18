@@ -3,7 +3,6 @@ import { Send } from "lucide-react";
 const ChatInput = () => {
   return (
     <div className="flex gap-3">
-
       <input
         type="text"
         placeholder="Ask about your report..."
@@ -26,7 +25,8 @@ focus:ring-cyan-400/20
 "
       />
 
-      <button className="
+      <button
+        className="
 rounded-2xl
 bg-cyan-500
 p-4
@@ -35,10 +35,10 @@ transition-all
 duration-200
 hover:scale-[1.03]
 hover:bg-cyan-400
-">
+"
+      >
         <Send size={20} />
       </button>
-
     </div>
   );
 };

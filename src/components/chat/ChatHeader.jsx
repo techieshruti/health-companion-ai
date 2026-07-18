@@ -25,30 +25,35 @@ const navigate = useNavigate();
         </div>
 
       </div>
-      <button
-  onClick={() => navigate("/report")}
-  className="
-    inline-flex
-    items-center
-    gap-2
-    rounded-xl
-    border
-    border-cyan-400/20
-    bg-slate-800/70
-    px-4
-    py-2
-    text-sm
-    text-slate-200
-    backdrop-blur-md
-    transition-all
-    duration-200
-    hover:border-cyan-400
-    hover:bg-slate-700
-  "
->
-  <ChevronLeft size={16} />
-  Back to Report
-</button>
+<button
+          onClick={() => navigate("/report-details")}
+          className="
+            inline-flex
+            items-center
+            gap-2
+            rounded-full
+            cursor-pointer
+            border
+            border-cyan-400/20
+            bg-white/5
+            px-4
+            py-2
+            text-sm
+            font-medium
+            text-cyan-300
+            backdrop-blur-md
+            transition-all
+            duration-300
+            hover:-translate-y-0.5
+            hover:border-cyan-400/40
+            hover:bg-cyan-400/10
+            hover:text-white
+            hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]
+          "
+        >
+          <ChevronLeft size={18} />
+          Back to Home
+        </button>
 
     </div>
   );

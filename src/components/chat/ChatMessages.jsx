@@ -18,8 +18,8 @@ const ChatMessages = ({ messages }) => {
           <div
             className={`max-w-[82%] rounded-3xl px-6 py-5 ${
               message.role === "assistant"
-                ? "border border-cyan-400/15 bg-slate-900 shadow-[0_0_18px_rgba(34,211,238,0.06)]"
-                : "bg-cyan-500 text-white"
+  ? "border border-cyan-400/15 bg-slate-900 text-white shadow-[0_0_18px_rgba(34,211,238,0.06)]"
+  : "bg-cyan-500 text-white"
             }`}
           >
 
@@ -31,7 +31,7 @@ const ChatMessages = ({ messages }) => {
                 <User size={18} />
               )}
 
-              <span className="text-sm font-semibold">
+              <span className="text-sm font-semibold text-white">
                 {message.role === "assistant"
                   ? "AI"
                   : "You"}
@@ -39,7 +39,7 @@ const ChatMessages = ({ messages }) => {
 
             </div>
 
-            <p className="whitespace-pre-line leading-7">
+            <p className="whitespace-pre-line leading-7 text-slate-200">
               {message.text}
             </p>
 

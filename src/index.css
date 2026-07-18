@@ -84,3 +84,17 @@
 .report-card {
   animation: reportCardFade 1s ease-in-out;
 }
+
+
+/* Fade Up Animation in Chat */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
