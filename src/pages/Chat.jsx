@@ -27,7 +27,6 @@ You can ask me about:
   ]);
 
   const [isTyping, setIsTyping] = useState(false);
-
   const messagesRef = useRef(null);
 
   const sendMessage = () => {
@@ -37,6 +36,13 @@ You can ask me about:
 
     setInput("");
   };
+
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
+}, []);
 
   useEffect(() => {
     messagesRef.current?.scrollTo({

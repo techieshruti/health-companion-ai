@@ -21,8 +21,10 @@ function TestCard({ test, onViewDetails }) {
 
   return (
     <div
-      className="
+  id={test.name.replace(/\s+/g, "-")}
+  className="
 group
+scroll-mt-28
 rounded-3xl
 border
 border-cyan-400/20
@@ -37,7 +39,7 @@ hover:border-cyan-400/40
 hover:bg-white/[0.08]
 hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
 "
-    >
+>
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>

@@ -10,11 +10,11 @@ export const dummyAnswers = {
     "Your report indicates low Vitamin D and elevated LDL cholesterol. Focus on improving these through diet, sunlight exposure, and regular exercise.",
 
   "Explain my Vitamin D result":
-    "Vitamin D supports bone health and immunity. Your level is below the recommended range.",
+  "Vitamin D supports bone health and immunity. Your Vitamin D level is below the recommended range.",
 
-  "Why is my LDL high?":
-    "High LDL cholesterol can increase the risk of heart disease. Reducing saturated fats and exercising regularly can help.",
-
+"Why is my LDL high?":
+  "Your LDL Cholesterol level is above the normal range. High LDL Cholesterol can increase the risk of heart disease.",
+  
   "How can I improve my health score?":
     "Improving Vitamin D levels, lowering LDL cholesterol, staying hydrated, and exercising consistently will positively impact your overall health score.",
 

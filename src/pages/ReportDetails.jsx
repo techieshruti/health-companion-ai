@@ -15,7 +15,9 @@ function ReportDetails() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTest, setSelectedTest] = useState(null);
   const [searchParams] = useSearchParams();
+  const selectedTestName = searchParams.get("test");
   const filter = searchParams.get("filter");
+  const testName = searchParams.get("test");
 
   const [activeFilter, setActiveFilter] = useState("All");
 const { report } = useReport();
@@ -51,6 +53,41 @@ useEffect(() => {
 
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
+
+// scroll to test card if testName is present in the URL
+useEffect(() => {
+  if (!selectedTestName) return;
+
+  const id = selectedTestName.replace(/\s+/g, "-");
+
+  const element = document.getElementById(id);
+
+  if (element) {
+    setTimeout(() => {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+
+      element.classList.add(
+        "ring-2",
+        "ring-cyan-400",
+        "ring-offset-2",
+        "ring-offset-[#07131F]"
+      );
+
+      setTimeout(() => {
+        element.classList.remove(
+          "ring-2",
+          "ring-cyan-400",
+          "ring-offset-2",
+          "ring-offset-[#07131F]"
+        );
+      }, 2000);
+
+    }, 300);
+  }
+}, [selectedTestName]);
 
 const scrollToTop = () => {
   window.scrollTo({

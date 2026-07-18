@@ -49,7 +49,7 @@ function UploadBox({ onInvalidReport }) {
   };
 
   // file validation
-  const maxFileSize = 10 * 1024 * 1024;
+  const maxFileSize = 20 * 1024 * 1024;
 
   const validateFile = (file) => {
     const allowedTypes = ["application/pdf", "image/png", "image/jpeg"];

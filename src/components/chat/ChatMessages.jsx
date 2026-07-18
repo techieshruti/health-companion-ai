@@ -1,4 +1,5 @@
 import { Bot, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const parameterLinks = [
   "Vitamin D",
@@ -9,6 +10,47 @@ const parameterLinks = [
 ];
 
 const ChatMessages = ({ messages }) => {
+  const navigate = useNavigate();
+
+const renderMessage = (text) => {
+  const tests = [
+    "Vitamin D",
+    "TSH",
+    "LDL Cholesterol",
+    "HbA1c",
+    "Hemoglobin",
+  ];
+
+  const regex = new RegExp(`(${tests.join("|")})`, "g");
+
+  return text.split(regex).map((part, index) => {
+    if (tests.includes(part)) {
+      return (
+        <button
+          key={index}
+          onClick={() =>
+            navigate(
+              `/report-details?test=${encodeURIComponent(part)}`
+            )
+          }
+          className="
+            cursor-pointer
+            font-medium
+            text-cyan-300
+            transition
+            hover:text-cyan-200
+            hover:underline
+          "
+        >
+          {part}
+        </button>
+      );
+    }
+
+    return part;
+  });
+};
+
   return (
     <div className="space-y-3">
 
@@ -65,7 +107,7 @@ hover:shadow-[0_0_24px_rgba(34,211,238,0.18)] ${
             </div>
 
             <p className="whitespace-pre-line leading-7 text-slate-200">
-              {message.text}
+              {renderMessage(message.text)}
             </p>
 
             {message.time && (
