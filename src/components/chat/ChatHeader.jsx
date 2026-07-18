@@ -26,7 +26,7 @@ const navigate = useNavigate();
 
       </div>
 <button
-          onClick={() => navigate("/report-details")}
+          onClick={() => navigate("/dashboard")}
           className="
             inline-flex
             items-center
@@ -52,7 +52,7 @@ const navigate = useNavigate();
           "
         >
           <ChevronLeft size={18} />
-          Back to Home
+          Back to Dashboard
         </button>
 
     </div>

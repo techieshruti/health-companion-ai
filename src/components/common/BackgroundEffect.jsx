@@ -8,6 +8,14 @@ import {
   Bot,
   ScanSearch,
   Waves,
+  MessageSquare,
+  BrainCircuit,
+  BotMessageSquare,
+  MessageSquareLock,
+  HeartPlus,
+  HeartPulse,
+  ShieldPlus,
+  Pill,
 } from "lucide-react";
 
 function BackgroundEffect({ variant = "dashboard" }) {
@@ -33,18 +41,21 @@ function BackgroundEffect({ variant = "dashboard" }) {
           Sparkles,
           Bot,
           Orbit,
+          BrainCircuit,
+          MessageSquareLock,
+          BotMessageSquare
         ]
       : variant === "report"
       ? [
           Activity,
-          ScanSearch,
           Orbit,
-          CircleDot,
-          Waves,
+          HeartPulse,
+          ShieldPlus,
+          Pill,
         ]
       : [
           Circle,
-          CircleDot,
+          HeartPulse,
           Activity,
           Cross,
           Orbit,

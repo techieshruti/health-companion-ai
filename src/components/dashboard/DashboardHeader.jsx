@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 function DashboardHeader() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ function DashboardHeader() {
             hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]
           "
         >
-          <ArrowLeft size={18} />
+          <ChevronLeft size={18} />
           Back to Home
         </button>
       </div>

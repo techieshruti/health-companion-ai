@@ -1,6 +1,6 @@
 const SuggestedQuestions = ({ questions, onSelect }) => {
   return (
-    <div className="mb-8">
+    <div className="mb-6">
       <p className="mb-4 text-cyan-400">Suggested Questions</p>
 
       <div className="flex flex-wrap gap-3">
@@ -19,6 +19,7 @@ const SuggestedQuestions = ({ questions, onSelect }) => {
     text-sm
     font-medium
     text-slate-200
+    cursor-pointer
     transition-all
     duration-300
     hover:-translate-y-0.5
