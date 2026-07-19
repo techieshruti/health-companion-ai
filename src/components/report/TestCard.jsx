@@ -27,6 +27,10 @@ group
 scroll-mt-28
 rounded-3xl
 border
+h-full
+min-h-[340px]
+flex
+flex-col
 border-cyan-400/20
 bg-white/[0.06]
 backdrop-blur-xl
@@ -64,7 +68,7 @@ hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
       </div>
 
       {/* Values */}
-      <div className="mt-6 space-y-4">
+      <div className="mt-6 flex-1 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-slate-400">Result</span>
 

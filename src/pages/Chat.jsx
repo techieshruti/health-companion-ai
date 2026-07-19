@@ -70,8 +70,6 @@ You can ask me about:
   }, [messages, isTyping]);
 
   const askQuestion = async (question) => {
-    setShowSuggestions(false);
-
     const updatedMessages = [
       ...messages,
       {

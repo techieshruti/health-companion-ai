@@ -9,10 +9,11 @@ import { useState, useRef, useEffect } from "react";
 import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
-import { normalizeTests } from "../../utils/normalizeTests";
+import { normalizeTests, normalizeTestName, } from "../../utils/normalizeTests";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { extractPdfText } from "../../utils/extractPdfText";
 import { calculateStatus } from "../../utils/calculateStatus";
+import { NotepadText } from "lucide-react";
 
 const loadingMessages = [
   "Extracting text...",
@@ -149,9 +150,11 @@ const report = {
   summary: insights.summary,
 
   tests: extracted.tests.map((test) => {
-    const ai = insights.tests.find(
-      (item) => item.name === test.name
-    );
+   const ai = insights.tests.find(
+  (item) =>
+    normalizeTestName(item.name) ===
+    normalizeTestName(test.name)
+);
 
     return {
       ...test,
@@ -291,36 +294,59 @@ alert(error.message);
           {error}
         </div>
       )}
-
-      <button
-        onClick={() => {
-          setError("");
-          setSelectedFile(null);
-          setReport(sampleReport);
-          navigate("/dashboard");
-        }}
-        className="
-mt-6
-inline-flex
-items-center
-rounded-xl
+<div
+  className="
+mt-8
+rounded-2xl
 border
 border-cyan-400/20
-bg-white/5
-px-5
-py-2.5
-text-cyan-300
-font-medium
-transition-all
-cursor-pointer
-duration-300
-hover:bg-cyan-500/10
-hover:border-cyan-400/40
-hover:text-cyan-200
+bg-cyan-500/5
+p-6
 "
-      >
-        Try Sample Report
-      </button>
+>
+  <h3 className="text-lg flex font-semibold text-white">
+    <NotepadText className="mr-2"/> Don't have a health report?
+  </h3>
+
+  <p className="mt-2 text-sm leading-6 text-slate-400">
+    Explore the app instantly using our sample health report and experience
+    AI-powered analysis, explanations and recommendations.
+  </p>
+
+  <button
+    onClick={() => {
+      setError("");
+      setSelectedFile(null);
+      setReport(sampleReport);
+      navigate("/dashboard");
+    }}
+    className="
+    mt-4
+inline-flex
+items-center
+justify-center
+rounded-2xl
+bg-gradient-to-r
+from-blue-600
+via-sky-500
+to-cyan-500
+px-7
+py-4
+font-semibold
+cursor-pointer
+text-white
+shadow-lg
+shadow-cyan-500/20
+transition-all
+duration-300
+hover:-translate-y-1
+hover:shadow-cyan-400/40
+active:scale-[0.98]
+"
+  >
+    Explore Demo Report
+  </button>
+</div>
 
       <div className="mt-6">
         {isAnalyzing ? (

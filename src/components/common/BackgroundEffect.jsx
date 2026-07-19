@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 function BackgroundEffect({ variant = "dashboard" }) {
-  const particleCount = variant === "chat" ? 10 : 16;
+  const particleCount = variant === "chat" ? 18 : 16;
 
   const iconColors = [
     "text-cyan-300/60",
@@ -133,4 +133,4 @@ function BackgroundEffect({ variant = "dashboard" }) {
   );
 }
 
-export default BackgroundEffect;
+export default React.memo(BackgroundEffect);;

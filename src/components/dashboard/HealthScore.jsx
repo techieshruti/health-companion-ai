@@ -83,7 +83,7 @@ const score = report?.summary?.healthScore ?? 0;
                 {score}
               </span>
 
-              <span className="mb-1 text-cyan-300 font-medium">
+              <span className="mb-1 text-cyan-300 font-medium text-2xl">
                 {label}
               </span>
             </div>

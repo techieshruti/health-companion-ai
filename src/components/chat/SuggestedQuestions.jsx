@@ -1,6 +1,6 @@
 const SuggestedQuestions = ({ questions, onSelect }) => {
   return (
-    <div className="mb-6">
+    <div className="mb-6 bg-transparent">
       <p className="mb-4 text-cyan-400">Suggested Questions</p>
 
       <div className="flex flex-wrap gap-3">

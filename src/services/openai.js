@@ -242,7 +242,21 @@ Return:
 Rules:
 
 - Give explanations in simple English.
-- explanation should be 2-3 sentences.
+- For NORMAL tests:
+Explain in 2-3 friendly sentences.
+Mention:
+- what this test measures
+- that the user's result is within the normal range
+- why maintaining this level is beneficial
+
+For ABNORMAL tests include:
+1. What this test measures.
+2. Which organ, body system, or disease it is mainly related to.
+3. What this result could mean.
+5. What symptoms may occur if it remains abnormal.
+Keep explanations simple enough for a non-medical person.
+
+Avoid unnecessary concern.
 - reason must contain 2-4 possible causes.
 - foods should contain 4-6 foods.
 - exercise should contain 2-4 exercises.

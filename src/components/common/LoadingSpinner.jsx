@@ -1,3 +1,5 @@
+import { Stethoscope } from "lucide-react";
+
 function LoadingSpinner({ message }) {
   return (
     <div className="mt-10 flex flex-col items-center">
@@ -12,7 +14,7 @@ function LoadingSpinner({ message }) {
         <div className="absolute h-16 w-16 rounded-full bg-cyan-500/10 blur-xl animate-pulse"></div>
 
         <div className="relative z-10 text-3xl">
-          🩺
+         <Stethoscope className="w-7 h-7"/>
         </div>
 
       </div>
@@ -44,7 +46,7 @@ function LoadingSpinner({ message }) {
 
       </div>
 
-      <p className="mt-4 text-xs text-slate-500">
+      <p className="mt-4 text-xs text-slate-400">
         Usually takes 5–10 seconds
       </p>
 
