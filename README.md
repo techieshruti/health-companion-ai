@@ -203,40 +203,6 @@ src
 
 ---
 
-# ⚙️ Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/yourusername/ai-health-companion.git
-```
-
-Move into the project
-
-```bash
-cd ai-health-companion
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Create a `.env` file
-
-```env
-VITE_OPENAI_API_KEY=your_openai_api_key
-```
-
-Run the project
-
-```bash
-npm run dev
-```
-
----
-
 # 🌟 Future Improvements
 
 - OCR support for scanned reports
@@ -244,7 +210,6 @@ npm run dev
 - Doctor consultation recommendations
 - Historical report comparison
 - Health trend graphs
-- Downloadable AI summary PDF
 - Medicine reminders
 - Nutrition planning
 - Voice-based health assistant
@@ -263,7 +228,7 @@ Always consult a qualified healthcare professional regarding medical concerns.
 
 # 👨‍💻 Author
 
-**Rahul Sharma**
+**Shruti Chandra**
 
 Frontend Developer
 

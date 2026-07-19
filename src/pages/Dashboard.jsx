@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PageTransition from "../components/common/PageTransition";
 import PageHeader from "../components/common/PageHeader";
 import AISummary from "../components/dashboard/AISummary";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
@@ -41,6 +42,7 @@ const scrollToTop = () => {
 };
 
   return (
+    <PageTransition>
     <div className="relative min-h-screen bg-[#07131F]">
        <BackgroundEffect variant="dashboard" />
 
@@ -92,6 +94,7 @@ const scrollToTop = () => {
 )}
       </div>
     </div>
+    </PageTransition>
   );
 }
 

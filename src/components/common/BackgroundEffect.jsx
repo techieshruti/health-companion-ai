@@ -1,3 +1,4 @@
+import React, { useMemo } from "react";
 import {
   Circle,
   CircleDot,
@@ -61,9 +62,9 @@ function BackgroundEffect({ variant = "dashboard" }) {
           Orbit,
         ];
 
-  const particleData = Array.from(
-    { length: particleCount },
-    (_, index) => ({
+ const particleData = useMemo(
+  () =>
+    Array.from({ length: particleCount }, (_, index) => ({
       id: index,
       left: Math.random() * 100,
       top: Math.random() * 100,
@@ -72,8 +73,9 @@ function BackgroundEffect({ variant = "dashboard" }) {
       delay: Math.random() * 8,
       rotation: Math.random() * 360,
       opacity: Math.random() * 0.25 + 0.35,
-    })
-  );
+    })),
+  [particleCount]
+);
 
   const showParticles =
     variant === "dashboard" ||

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PageTransition from "../components/common/PageTransition";
 import InfoCard from "../components/report/InfoCard";
 import PageHeader from "../components/common/PageHeader";
 import TestCard from "../components/report/TestCard";
@@ -97,6 +98,7 @@ const scrollToTop = () => {
 };
 
   return (
+    <PageTransition>
     <div className="relative min-h-screen bg-[#07131F]">
       <BackgroundEffect variant="report" />
 
@@ -155,6 +157,7 @@ const scrollToTop = () => {
   </button>
 )}
     </div>
+    </PageTransition>
   );
 }
 

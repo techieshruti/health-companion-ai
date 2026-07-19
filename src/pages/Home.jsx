@@ -5,6 +5,7 @@ import { HeartPulse } from 'lucide-react';
 import { Bot } from 'lucide-react';
 import { useState } from "react";
 import InvalidReportModal from "../components/upload/InvalidReportModal";
+import PageTransition from "../components/common/PageTransition";
 
 function Home() {
   const [showInvalidModal, setShowInvalidModal] = useState(false);
@@ -17,6 +18,7 @@ const handleReset = () => {
 };
 
   return (
+    <PageTransition>
     <div className="relative min-h-screen overflow-hidden bg-[#07142A] text-white">
       {/* Animated Medical Background */}
       <MedicalWave />
@@ -96,6 +98,7 @@ const handleReset = () => {
 
       </div>
     </div>
+    </PageTransition>
   );
 }
 

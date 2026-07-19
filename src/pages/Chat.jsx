@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PageTransition from "../components/common/PageTransition";
 import { Bot } from "lucide-react";
 import PageHeader from "../components/common/PageHeader";
 import SuggestedQuestions from "../components/chat/SuggestedQuestions";
@@ -19,12 +20,13 @@ const streamText = async (text, onUpdate) => {
 
     onUpdate(currentText);
 
-    await new Promise((resolve) => setTimeout(resolve, 35));
+    await new Promise((resolve) => setTimeout(resolve, 50));
   }
 };
 
 const Chat = () => {
   const { report } = useReport();
+  const chatContainerRef = useRef(null);
   console.log("Report Context:", report);
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
@@ -32,14 +34,12 @@ const Chat = () => {
     {
       role: "assistant",
       text: `Hi! 👋 I'm your AI Health Assistant.
-I've analyzed your blood report and I'm here to explain your results in simple language.
 
-You can ask me about:
-• Abnormal values
-• Diet
-• Lifestyle
-• Medications
-• Improving your health score`,
+Ask me anything about your health report.
+Try asking:
+• Why is my Vitamin D low?
+• What should I improve first?
+• Explain my abnormal results.`,
       time: new Date(),
     },
   ]);
@@ -63,13 +63,26 @@ You can ask me about:
   }, []);
 
   useEffect(() => {
-    messagesRef.current?.scrollTo({
-      top: messagesRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [messages, isTyping]);
+  messagesRef.current?.scrollTo({
+    top: messagesRef.current.scrollHeight,
+    behavior: "smooth",
+  });
+
+  if (window.innerWidth < 1024) {
+    setTimeout(() => {
+      chatContainerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 100);
+  }
+}, [messages]);
 
   const askQuestion = async (question) => {
+    messagesRef.current?.scrollTo({
+  top: messagesRef.current.scrollHeight,
+  behavior: "smooth",
+});
     const updatedMessages = [
       ...messages,
       {
@@ -81,7 +94,17 @@ You can ask me about:
 
     // Immediately show user message
     setMessages(updatedMessages);
+setTimeout(() => {
+  chatContainerRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
 
+  messagesRef.current?.scrollTo({
+    top: messagesRef.current.scrollHeight,
+    behavior: "smooth",
+  });
+}, 100);
     setIsTyping(true);
 
     try {
@@ -127,7 +150,8 @@ You can ask me about:
   };
 
   return (
-    <div className="relative  min-h-screen bg-[#071522] px-6 py-8">
+    <PageTransition>
+    <div className="relative  min-h-screen bg-[#07131F] px-6 py-8">
       <BackgroundEffect variant="chat" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -138,9 +162,9 @@ You can ask me about:
   backTo="/report-details"
 />
 
-        <div className="mt-6 grid grid-cols-12 gap-6">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* left section */}
-          <div className="col-span-4 space-y-6">
+          <div className="space-y-6 lg:col-span-4">
             {/* Report Summary */}
 
             <div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
@@ -187,10 +211,10 @@ You can ask me about:
             </div>
           </div>
           {/* Right section */}
-          <div className="col-span-8">
+          <div className="lg:col-span-8">
             {/* Chat Container */}
 
-            <div className="mt-1 flex h-[650px] flex-col rounded-3xl border border-cyan-400/15 bg-slate-900/40 backdrop-blur-xl">
+            <div ref={chatContainerRef} className="mt-1 flex h-[65vh] min-h-[500px] lg:h-[650px] flex-col rounded-3xl border border-cyan-400/15 bg-slate-900/40 backdrop-blur-xl">
               {/* Scrollable Messages */}
 
               <div
@@ -235,6 +259,7 @@ You can ask me about:
         </div>
       </div>
     </div>
+    </PageTransition>
   );
 };
 

@@ -1,4 +1,11 @@
 @import "tailwindcss";
+html,
+body,
+#root {
+  background: #071522;
+  min-height: 100%;
+}
+
 @keyframes floating {
   0%,
   100% {
@@ -123,5 +130,17 @@
 
   100% {
     transform: translateX(320%);
+  }
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
