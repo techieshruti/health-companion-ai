@@ -43,6 +43,7 @@ function PageHeader({
               border-cyan-400/20
               bg-white/5
               px-4
+              cursor-pointer
               py-2
               text-sm
               font-medium

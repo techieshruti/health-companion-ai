@@ -2,34 +2,41 @@ import { AlertTriangle, ChevronRight } from "lucide-react";
 import { useReport } from "../../context/ReportContext";
 import { useNavigate } from "react-router-dom";
 
-const attentionTests = [
-  {
-    name: "Vitamin D",
-    status: "Low",
-    value: "18 ng/mL",
-    color: "bg-red-500",
-  },
-  {
-    name: "TSH",
-    status: "Borderline",
-    value: "5.8 mIU/L",
-    color: "bg-yellow-400",
-  },
-  {
-    name: "LDL Cholesterol",
-    status: "High",
-    value: "168 mg/dL",
-    color: "bg-red-500",
-  },
-];
-
 function NeedsAttention() {
   const navigate = useNavigate();
   const { report } = useReport();
- const abnormalTests =
+const abnormalTests =
   report?.tests?.filter(
     (test) => test.status !== "Normal"
   ) || [];
+
+// Remove duplicate tests
+const uniqueAbnormalTests = Array.from(
+  new Map(
+    abnormalTests.map((test) => [
+      test.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "")
+        .replace("serumpotassium", "potassium")
+        .replace("potassiumserum", "potassium"),
+      test,
+    ])
+  ).values()
+);
+
+// Sort by severity
+const sortedTests = [...uniqueAbnormalTests].sort((a, b) => {
+  const order = {
+    High: 1,
+    Low: 2,
+    Borderline: 3,
+  };
+
+  return (
+    (order[a.status] || 99) -
+    (order[b.status] || 99)
+  );
+});
 
   return (
     <section className="mt-10">
@@ -46,7 +53,7 @@ function NeedsAttention() {
       </div>
 
       <div className="space-y-4">
-        {abnormalTests.map((test) => (
+        {sortedTests.map((test) => (
           <div
             key={test.name}
             onClick={() =>
@@ -74,7 +81,15 @@ function NeedsAttention() {
 "
           >
             <div className="flex items-center gap-4">
-              <div className={`h-3 w-3 rounded-full ${test.color}`} />
+              <div
+  className={`h-3 w-3 rounded-full ${
+    test.status === "High"
+      ? "bg-red-500"
+      : test.status === "Low"
+      ? "bg-orange-500"
+      : "bg-amber-300"
+  }`}
+/>
 
               <div>
                 <h3 className="font-semibold text-white">{test.name}</h3>

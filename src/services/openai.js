@@ -9,6 +9,8 @@ export async function analyzeReport(reportText) {
   try {
     const completion = await client.chat.completions.create({
       model: "gpt-4.1-mini",
+      temperature: 0,
+      max_completion_tokens: 12000,
 
       messages: [
         {
@@ -53,34 +55,49 @@ The JSON must follow this exact structure.
       "range":"",
       "status":"",
       "explanation":"",
-      "reason":[],
-      "recommendation":"",
-      "severity":"",
       "foods":[],
-      "exercise":[],
-      "doctorAdvice":[],
-      "questionsToAsk":[]
+      "exercise":[]
     }
   ]
 }
 
+IMPORTANT:
+If status is "Normal":
+- Keep explanation very short (1-2 sentences).
+- Do NOT generate:
+  - reason
+  - doctorAdvice
+  - questionsToAsk
+
+If status is High, Low or Borderline return complete information including:
+"reason":[],
+      "recommendation":"",
+      "severity":"",
+      "doctorAdvice":[],
+      "questionsToAsk":[]
+
 
 IMPORTANT
 
-Return EVERY laboratory parameter found in the report.
-The tests array must contain exactly one object for every laboratory parameter present in the report.
-Example:
-If the report contains 18 parameters, return 18 objects.
-If the report contains 29 parameters, return 29 objects.
-If the report contains 41 parameters, return 41 objects.
-Before returning the JSON:
-- Count the extracted laboratory parameters.
-- Ensure tests.length equals summary.totalTests.
-- If the counts do not match, regenerate the tests array before responding.
-
-Never omit a normal test.
-Normal tests and abnormal tests must both be included.
-Do not skip any laboratory parameter.
+LABORATORY EXTRACTION RULES
+1. Extract laboratory parameters ONLY.
+2. Ignore:
+- page headers
+- page footers
+- doctor names
+- addresses
+- package names
+- interpretation paragraphs
+- comments
+- recommendations
+3. Extract every laboratory parameter exactly once.
+4. Never duplicate a parameter.
+5. Never merge two parameters.
+6. Never skip a normal parameter.
+7. Never invent a parameter.
+8. tests[] is the source of truth.
+9. summary.totalTests MUST equal tests.length.
+10. summary.normal, high, low and borderline must be calculated only from tests[].
 
 If any patient information is missing from the report:
 Use an empty string ("") instead of guessing.
@@ -94,22 +111,22 @@ If a laboratory parameter has no reference range in the report,
 return:
 "range":""
 
-Rules:
-- mentionedTests must contain every test name mentioned inside overallSummary.
-Example:
-"mentionedTests":[
-"Vitamin D",
-"Potassium",
-"Homocysteine"
-]
-- Always use the exact parameter names from the report.
-- abnormalTests must contain the names of every test whose status is not Normal.
-- Health score must be between 0-100.
+mentionedTests and abnormalTests are optional helper fields.
+Only include test names that already exist inside the tests array.
+Never invent a test name.
+Never shorten a laboratory parameter name.
+Use the exact laboratory parameter names returned in tests[].
+
+Health Score Rules:
+Return healthScore as 0.
+The frontend application will calculate the final health score.
+
 - Status should only be:
 Normal
 High
 Low
 Borderline
+
 Status matching rules:
 - If the value is within the reference range → Normal
 - If above the upper limit → High
@@ -128,7 +145,7 @@ overallSummary rules:
 
 For ABNORMAL tests (High, Low, Borderline):
 
-The explanation MUST be 60-80 words in small paragraphs.
+The explanation MUST be 30-50 words in small paragraphs.
 Write in simple English.
 Always follow this structure.
 1. Explain what this test measures.
@@ -163,7 +180,7 @@ Example
 ]
 
 
-Return 6-8 foods.
+Return 3-4 foods.
 
 Do not explain.
 Example
@@ -176,7 +193,7 @@ Example
 "Fortified cereals"
 ]
 
-Return 3-5 suitable exercises.
+Return 3-4 suitable exercises.
 Example
 "exercise":[
 "Walking",
@@ -202,7 +219,7 @@ Example:
 "Take supplements only if prescribed."
 ]
 
-Return 3 questions the patient can ask the doctor.
+Return 2 questions the patient can ask the doctor.
 Example
 "questionsToAsk":[
 "Do I need another blood test?",
@@ -229,7 +246,6 @@ Return ONLY JSON.
         },
       ],
 
-      temperature: 0.2,
     });
 
     // return JSON.parse(
@@ -238,10 +254,25 @@ Return ONLY JSON.
 const aiResponse = completion.choices[0].message.content;
 
 console.log("========== GPT RESPONSE ==========");
-console.log(aiResponse);
+// console.log(aiResponse);
 console.log("==================================");
 
+const report = JSON.parse(aiResponse);
+
+console.log("========== GPT RESPONSE ==========");
+console.log("Total Tests:", report.tests.length);
+
+console.table(
+  report.tests.map((t, index) => ({
+    index,
+    name: t.name,
+    value: t.value,
+    status: t.status,
+  }))
+);
+
   return JSON.parse(aiResponse);
+  
 } catch (err) {
   console.error("Invalid JSON returned by OpenAI");
   console.error(aiResponse);

@@ -2,7 +2,7 @@ import UploadButton from "./UploadButton";
 import { analyzeReport } from "../../services/openai";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
@@ -27,6 +27,12 @@ function UploadBox({ onInvalidReport }) {
 
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "instant",
+  });
+}, []);
 
   // handle upload button click
   const handleUploadClick = () => {
@@ -99,6 +105,7 @@ function UploadBox({ onInvalidReport }) {
     }
 
     setIsAnalyzing(true);
+
 let messageIndex = 0;
 
 setLoadingMessage(loadingMessages[0]);
@@ -117,7 +124,69 @@ const loadingInterval = setInterval(() => {
       const { text, totalPages } = await extractPdfText(selectedFile);
 
       const report = await analyzeReport(text);
-      console.log("OpenAI Result:", report);
+
+const tests = report.tests || [];
+
+// Recalculate summary from tests
+report.summary.totalTests = tests.length;
+
+report.summary.normal = tests.filter(
+  (t) => t.status === "Normal"
+).length;
+
+report.summary.high = tests.filter(
+  (t) => t.status === "High"
+).length;
+
+report.summary.low = tests.filter(
+  (t) => t.status === "Low"
+).length;
+
+report.summary.borderline = tests.filter(
+  (t) => t.status === "Borderline"
+).length;
+
+const abnormalTests = tests.filter(
+  (t) => t.status !== "Normal"
+);
+
+report.summary.abnormalTests = abnormalTests.map(
+  (t) => t.name
+);
+
+report.summary.mentionedTests = abnormalTests.map(
+  (t) => t.name
+);
+
+
+// Debug logs
+  console.log("========== REPORT DEBUG ==========");
+  console.log("Summary Total Tests:", report.summary.totalTests);
+  console.log("Tests Array Length:", report.tests.length);
+
+  console.table(
+    report.tests.map((t, i) => ({
+      index: i,
+      name: t.name,
+      status: t.status,
+    })))
+
+      // Health score fallback
+//       if (report.summary.healthScore == null) {
+//   const deduction =
+//     report.summary.high * 8 +
+//     report.summary.low * 5 +
+//     report.summary.borderline * 3;
+
+//   report.summary.healthScore = Math.max(100 - deduction, 0);
+// }
+
+const deduction =
+  report.summary.high * 4 +
+  report.summary.low * 2 +
+  report.summary.borderline * 1;
+
+report.summary.healthScore = Math.max(100 - deduction, 0);
 
       report.summary.totalPages = totalPages;
 

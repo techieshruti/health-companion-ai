@@ -137,7 +137,7 @@ You can ask me about:
   title="AI Health Assistant"
   description="Ask anything about your uploaded health report in simple, easy-to-understand language."
   backText="Back to Dashboard"
-  backTo="/dashboard"
+  backTo="/report-details"
 />
 
         <div className="mt-6 grid grid-cols-12 gap-6">

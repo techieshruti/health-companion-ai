@@ -1,60 +1,53 @@
-import { Bot } from 'lucide-react';
+import { Bot } from "lucide-react";
 import { useReport } from "../../context/ReportContext";
 
 function AISummary() {
   const { report } = useReport();
   const summary = report?.summary;
-const [first, second, third] = summary?.abnormalTests ?? [];
+  const [first, second, third] = summary?.abnormalTests ?? [];
   const totalTests = summary?.totalTests;
-const abnormal = summary?.abnormalTests || [];
+  const abnormal = summary?.abnormalTests || [];
 
-const abnormalTests =
-  report?.tests?.filter(test => test.status !== "Normal") || [];
+  const abnormalTests =
+    report?.tests?.filter((test) => test.status !== "Normal") || [];
 
-const renderSummary = () => {
-  const text = summary?.overallSummary || "";
+  const renderSummary = () => {
+    const text = summary?.overallSummary || "";
 
-  const abnormalNames =
-    report?.tests
-      ?.filter((test) => test.status !== "Normal")
-      .map((test) =>
-        test.name
-          .replace(/\s*-\s*Serum/i, "")
-          .replace(/\s*Total-25 Hydroxy/i, "")
-          .trim()
-      ) || [];
+    const abnormalNames =
+      report?.tests
+        ?.filter((test) => test.status !== "Normal")
+        .map((test) =>
+          test.name
+            .replace(/\s*-\s*Serum/i, "")
+            .replace(/\s*Total-25 Hydroxy/i, "")
+            .trim(),
+        ) || [];
 
-  if (!abnormalNames.length) return text;
+    if (!abnormalNames.length) return text;
 
-  // Escape regex special characters
-  const escapedNames = abnormalNames.map((name) =>
-    name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-  );
-
-  const regex = new RegExp(
-    `(${escapedNames.join("|")})`,
-    "gi"
-  );
-
-  return text.split(regex).map((part, index) => {
-    const matched = abnormalNames.find(
-      (name) => name.toLowerCase() === part.toLowerCase()
+    // Escape regex special characters
+    const escapedNames = abnormalNames.map((name) =>
+      name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     );
 
-    if (matched) {
-      return (
-        <span
-          key={index}
-          className="font-semibold text-cyan-300"
-        >
-          {part}
-        </span>
+    const regex = new RegExp(`(${escapedNames.join("|")})`, "gi");
+    return text.split(regex).map((part, index) => {
+      const matched = abnormalNames.find(
+        (name) => name.toLowerCase() === part.toLowerCase(),
       );
-    }
 
-    return part;
-  });
-};
+      if (matched) {
+        return (
+          <span key={index} className="font-semibold text-cyan-300">
+            {part}
+          </span>
+        );
+      }
+
+      return part;
+    });
+  };
 
   return (
     <div
@@ -74,12 +67,11 @@ const renderSummary = () => {
       {/* Left Accent */}
       <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-cyan-400 to-blue-500"></div>
       <div className="p-6">
+        {/* Top Row */}
 
-  {/* Top Row */}
-
-  <div className="flex items-center gap-4">
-    <div
-      className="
+        <div className="flex items-center gap-4">
+          <div
+            className="
         flex
         h-16
         w-16
@@ -91,12 +83,12 @@ const renderSummary = () => {
         border-cyan-400/20
         bg-cyan-400/10
       "
-    >
-      <Bot className="h-8 w-8 text-cyan-300 ai-pulse" />
-    </div>
+          >
+            <Bot className="h-8 w-8 text-cyan-300 ai-pulse" />
+          </div>
 
-    <span
-      className="
+          <span
+            className="
         inline-flex
         items-center
         rounded-full
@@ -111,21 +103,19 @@ const renderSummary = () => {
         tracking-wide
         text-cyan-300
       "
-    >
-      AI Generated Summary
-    </span>
+          >
+            AI Generated Summary
+          </span>
+        </div>
 
-  </div>
+        {/* Bottom Content */}
 
-  {/* Bottom Content */}
+        <div className="mt-5 pl-20">
+          <h2 className="text-3xl font-bold text-white">
+            Health Report Overview
+          </h2>
 
-  <div className="mt-5 pl-20">
-
-    <h2 className="text-3xl font-bold text-white">
-      Health Report Overview
-    </h2>
-
-    {/* <p className="mt-2 leading-8 text-slate-300">
+          {/* <p className="mt-2 leading-8 text-slate-300">
               {report.summary.overallSummary}
               <span className="font-semibold text-white">
                 {summary?.totalTests} tests
@@ -145,13 +135,9 @@ const renderSummary = () => {
               requires attention. No critical abnormalities were detected.
 
             </p> */}
-            <p className="mt-4 leading-8 text-slate-300">
-  {renderSummary()}
-</p>
-
-  </div>
-
-</div>
+          <p className="mt-4 leading-8 text-slate-300">{renderSummary()}</p>
+        </div>
+      </div>
     </div>
   );
 }

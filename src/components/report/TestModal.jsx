@@ -1,4 +1,11 @@
-import { X, Bot, TriangleAlert, Lightbulb, MessageCircle, Salad } from "lucide-react";
+import {
+  X,
+  Bot,
+  TriangleAlert,
+  Lightbulb,
+  MessageCircle,
+  Salad,
+} from "lucide-react";
 import { useEffect } from "react";
 
 const statusStyles = {
@@ -11,6 +18,7 @@ const statusStyles = {
 function TestModal({ test, onClose }) {
   if (!test) return null;
   const badgeStyle = statusStyles[test.status] || statusStyles.Normal;
+  const isAbnormal = test.status !== "Normal";
 
   return (
     <div
@@ -110,26 +118,25 @@ function TestModal({ test, onClose }) {
             </section>
 
             {/* Possible Causes */}
+            {isAbnormal && test.reason?.length > 0 && (
+              <section className="mt-10">
+                <div className="mb-4 flex items-center gap-3">
+                  <TriangleAlert className="text-yellow-400" size={22} />
 
-            <section className="mt-10">
-              <div className="mb-4 flex items-center gap-3">
-                <TriangleAlert className="text-yellow-400" size={22} />
-
-                <h3 className="text-2xl font-semibold text-white">
-                  Possible Causes
-                </h3>
-              </div>
-              <div className="rounded-2xl bg-white/5 p-6">
-                <ul className="space-y-3 text-slate-300">
-                  {test.reason?.map((item) => (
-                    <li key={item}>• {item}</li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-
+                  <h3 className="text-2xl font-semibold text-white">
+                    Possible Causes
+                  </h3>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-6">
+                  <ul className="space-y-3 text-slate-300">
+                    {test.reason?.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
             {/* Lifestyle */}
-
             <section className="mt-10">
               <div className="mb-4 flex items-center gap-3">
                 <Salad className="text-green-400" size={22} />
@@ -138,77 +145,94 @@ function TestModal({ test, onClose }) {
                 </h3>
               </div>
 
-              <div className="rounded-2xl bg-white/5 p-6">
-                <h4 className="mb-3 text-slate-300 font-semibold">
-                  Recommended Foods
-                </h4>
+              {isAbnormal ? (
+                <div className="rounded-2xl bg-white/5 p-6">
+                  <h4 className="mb-3 text-slate-300 font-semibold">
+                    Recommended Foods
+                  </h4>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {test.foods?.map((food) => (
-                    <span
-                      key={food}
-                      className="rounded-full bg-emerald-500/10 border border-emerald-400/20 px-3 py-1 text-sm text-emerald-300"
-                    >
-                      {food}
-                    </span>
-                  ))}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {test.foods?.map((food) => (
+                      <span
+                        key={food}
+                        className="rounded-full bg-emerald-500/10 border border-emerald-400/20 px-3 py-1 text-sm text-emerald-300"
+                      >
+                        {food}
+                      </span>
+                    ))}
+                  </div>
+
+                  <h4 className="mb-3 text-slate-300 font-semibold">
+                    Exercise
+                  </h4>
+
+                  <div className="flex flex-wrap gap-2">
+                    {test.exercise?.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-violet-500/10 border border-violet-400/20 px-3 py-1 text-sm text-violet-300"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+              ) : (
+                <div className="space-y-3 text-slate-300 leading-7 rounded-2xl bg-white/5 p-6">
+                  <p>
+                    Maintain a balanced diet rich in fruits, vegetables, whole
+                    grains and adequate protein.
+                  </p>
 
-                <h4 className="mb-3 text-slate-300 font-semibold">Exercise</h4>
-
-                <div className="flex flex-wrap gap-2">
-                  {test.exercise?.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full bg-violet-500/10 border border-violet-400/20 px-3 py-1 text-sm text-violet-300"
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  <p>
+                    Stay hydrated, sleep 7–8 hours daily and continue regular
+                    physical activity to maintain healthy levels.
+                  </p>
                 </div>
-              </div>
+              )}
             </section>
 
             {/* Doctor Advice */}
+            {isAbnormal && test.doctorAdvice?.length > 0 && (
+              <section className="mt-10">
+                <div className="mb-4 flex items-center gap-3">
+                  <Lightbulb className="text-amber-400" size={22} />
 
-            <section className="mt-10">
-              <div className="mb-4 flex items-center gap-3">
-                <Lightbulb className="text-amber-400" size={22} />
+                  <h3 className="text-2xl font-semibold text-white">
+                    Doctor Advice
+                  </h3>
+                </div>
 
-                <h3 className="text-2xl font-semibold text-white">
-                  Doctor Advice
-                </h3>
-              </div>
+                <div className="rounded-2xl bg-white/5 p-6">
+                  <ul className="space-y-3 text-slate-300">
+                    {test.doctorAdvice?.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
 
-              <div className="rounded-2xl bg-white/5 p-6">
-                <ul className="space-y-3 text-slate-300">
-                  {test.doctorAdvice?.map((item) => (
-                    <li key={item}>• {item}</li>
-                  ))}
-                </ul>
-              </div>
-            </section>
+            {/* Doctor Question */}
+            {isAbnormal && test.questionsToAsk?.length > 0 && (
+              <section className="mt-10">
+                <div className="mb-4 flex items-center gap-3">
+                  <MessageCircle className="text-cyan-400" size={22} />
 
-            {/* Doctor */}
+                  <h3 className="text-2xl font-semibold text-white">
+                    Questions to Ask Your Doctor
+                  </h3>
+                </div>
 
-            <section className="mt-10">
-              <div className="mb-4 flex items-center gap-3">
-                <MessageCircle className="text-cyan-400" size={22} />
-
-                <h3 className="text-2xl font-semibold text-white">
-                  Questions to Ask Your Doctor
-                </h3>
-              </div>
-
-              <div className="rounded-2xl bg-white/5 p-6">
-                <ul className="space-y-3 text-slate-300">
-                  {test.questionsToAsk?.map((item) => (
-                    <li key={item}>• {item}</li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-
+                <div className="rounded-2xl bg-white/5 p-6">
+                  <ul className="space-y-3 text-slate-300">
+                    {test.questionsToAsk?.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            )}
             {/* Disclaimer */}
 
             <div className="mt-12 rounded-2xl border border-yellow-500/20 bg-yellow-500/10 p-5">
