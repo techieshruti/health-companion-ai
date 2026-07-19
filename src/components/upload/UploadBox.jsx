@@ -46,7 +46,7 @@ function UploadBox({ onInvalidReport }) {
     behavior: "smooth",
     block: "center",
   });
-}, 200);
+}, 300);
       setError("");
     } else {
       setSelectedFile(null);
@@ -117,6 +117,7 @@ const loadingInterval = setInterval(() => {
       const { text, totalPages } = await extractPdfText(selectedFile);
 
       const report = await analyzeReport(text);
+      console.log("OpenAI Result:", report);
 
       report.summary.totalPages = totalPages;
 

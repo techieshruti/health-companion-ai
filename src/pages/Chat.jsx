@@ -19,14 +19,13 @@ const streamText = async (text, onUpdate) => {
 
     onUpdate(currentText);
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, 35)
-    );
+    await new Promise((resolve) => setTimeout(resolve, 35));
   }
 };
 
 const Chat = () => {
   const { report } = useReport();
+  console.log("Report Context:", report);
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [messages, setMessages] = useState([
@@ -48,21 +47,20 @@ You can ask me about:
   const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef(null);
 
-  
- const sendMessage = () => {
-  if (!input.trim()) return;
+  const sendMessage = () => {
+    if (!input.trim()) return;
 
-  askQuestion(input);
+    askQuestion(input);
 
-  setInput("");
-};
+    setInput("");
+  };
 
-useEffect(() => {
-  window.scrollTo({
-    top: 0,
-    behavior: "instant",
-  });
-}, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
 
   useEffect(() => {
     messagesRef.current?.scrollTo({
@@ -71,73 +69,64 @@ useEffect(() => {
     });
   }, [messages, isTyping]);
 
-const askQuestion = async (question) => {
+  const askQuestion = async (question) => {
+    setShowSuggestions(false);
 
-  setShowSuggestions(false);
-
-  const updatedMessages = [
-    ...messages,
-    {
-      role: "user",
-      text: question,
-      time: new Date(),
-    },
-  ];
-
-  // Immediately show user message
-  setMessages(updatedMessages);
-
-  setIsTyping(true);
-
-  try {
-
-   const answer = await askHealthAssistant(
-  report,
-  updatedMessages
-);
-
-// Add empty assistant message
-setMessages([
-  ...updatedMessages,
-  {
-    role: "assistant",
-    text: "",
-    time: new Date(),
-  },
-]);
-
-// Hide typing indicator
-setIsTyping(false);
-
-// Animate the answer
-await streamText(answer, (partialText) => {
-  setMessages([
-    ...updatedMessages,
-    {
-      role: "assistant",
-      text: partialText,
-      time: new Date(),
-    },
-  ]);
-});
-
-  } catch (error) {
-
-    console.error(error);
-
-    setMessages([
-      ...updatedMessages,
+    const updatedMessages = [
+      ...messages,
       {
-        role: "assistant",
-        text:
-          "Sorry, I couldn't analyze your question.",
+        role: "user",
+        text: question,
         time: new Date(),
       },
-    ]);
+    ];
 
-  } finally { }
+    // Immediately show user message
+    setMessages(updatedMessages);
 
-};
+    setIsTyping(true);
+
+    try {
+      const answer = await askHealthAssistant(report, updatedMessages);
+
+      // Add empty assistant message
+      setMessages([
+        ...updatedMessages,
+        {
+          role: "assistant",
+          text: "",
+          time: new Date(),
+        },
+      ]);
+
+      // Hide typing indicator
+      setIsTyping(false);
+
+      // Animate the answer
+      await streamText(answer, (partialText) => {
+        setMessages([
+          ...updatedMessages,
+          {
+            role: "assistant",
+            text: partialText,
+            time: new Date(),
+          },
+        ]);
+      });
+    } catch (error) {
+      console.error(error);
+
+      setMessages([
+        ...updatedMessages,
+        {
+          role: "assistant",
+          text: "Sorry, I couldn't analyze your question.",
+          time: new Date(),
+        },
+      ]);
+    } finally {
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#071522] px-6 py-8">
@@ -145,17 +134,38 @@ await streamText(answer, (partialText) => {
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <ChatHeader />
-<ChatHeader />
 
-{/* Report Summary */}
+        {/* Report Summary */}
 
-<div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
-  ...
-</div>
+        <div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
+          <h3 className="mb-3 text-lg font-semibold text-cyan-300">
+            Uploaded Report
+          </h3>
 
-<div
-  className={`overflow-hidden ...`}
-></div>
+          <div className="grid grid-cols-2 gap-4 text-sm text-slate-300">
+            <div>
+              <p className="text-slate-400">Patient</p>
+              <p>{report?.patient?.name}</p>
+            </div>
+
+            <div>
+              <p className="text-slate-400">Health Score</p>
+              <p>{report?.summary?.healthScore}/100</p>
+            </div>
+
+            <div>
+              <p className="text-slate-400">Tests</p>
+              <p>{report?.summary?.totalTests}</p>
+            </div>
+
+            <div>
+              <p className="text-slate-400">Need Attention</p>
+              <p>{report?.summary?.high + report?.summary?.low}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={`overflow-hidden ...`}></div>
         <div
           className={`overflow-hidden transition-all duration-300 ${
             showSuggestions
