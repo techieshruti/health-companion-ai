@@ -70,6 +70,12 @@ function TestModal({ test, onClose }) {
 
                   <p className="mt-1 text-xl font-semibold text-white">
                     {test.value}
+
+                    {test.unit && (
+                      <span className="ml-2 text-base font-normal text-slate-400">
+                        {test.unit}
+                      </span>
+                    )}
                   </p>
                 </div>
 

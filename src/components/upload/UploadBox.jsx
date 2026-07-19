@@ -12,6 +12,7 @@ import FilePreview from "./FilePreview";
 import { normalizeTests } from "../../utils/normalizeTests";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { extractPdfText } from "../../utils/extractPdfText";
+import { calculateStatus } from "../../utils/calculateStatus";
 
 const loadingMessages = [
   "Extracting text...",
@@ -130,6 +131,11 @@ console.log(text);
 
       const extracted = await extractTests(text);
       extracted.tests = normalizeTests(extracted.tests);
+
+      extracted.tests = extracted.tests.map(test => ({
+  ...test,
+  status: calculateStatus(test.value, test.range),
+}));
 
       console.log(
   "After normalization:",

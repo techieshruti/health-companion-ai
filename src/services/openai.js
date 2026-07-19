@@ -84,8 +84,8 @@ Return:
     {
       "name":"",
       "value":"",
-      "range":"",
-      "status":""
+      "unit":"",
+      "range":""
     }
   ]
 }
@@ -108,15 +108,36 @@ Rules:
 7. Do not modify units.
 
 8. If a range is unavailable return "".
+9. Every test MUST contain these four fields:
+- name
+- value
+- unit
+- range
 
-9. Status must be one of:
-Normal
-High
-Low
-Borderline
+10. Extract the unit exactly as written immediately beside the value.
+Examples:
+mg/dL
+ng/mL
+pg/mL
+%
+U/L
+μIU/mL
+g/dL
 
-10. Determine status ONLY from the report's reference range.
-Do not guess.
+11. Never combine the unit into the value.
+
+Correct:
+"value":"375"
+"unit":"pg/ml"
+
+Wrong:
+"value":"375 pg/ml"
+
+12. Extract the reference range exactly as written.
+
+13. If the unit is unavailable return "".
+
+14. If the reference range is unavailable return "".
 `,
         },
 
@@ -143,7 +164,8 @@ console.table(
     index,
     name: t.name,
     value: t.value,
-    status: t.status,
+    range: t.range,
+    unit: t.unit,
   }))
 );
 

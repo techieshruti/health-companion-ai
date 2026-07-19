@@ -136,7 +136,7 @@ You can ask me about:
        <PageHeader
   title="AI Health Assistant"
   description="Ask anything about your uploaded health report in simple, easy-to-understand language."
-  backText="Back to Dashboard"
+  backText="Back to Report"
   backTo="/report-details"
 />
 

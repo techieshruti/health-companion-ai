@@ -5,38 +5,33 @@ import { useNavigate } from "react-router-dom";
 function NeedsAttention() {
   const navigate = useNavigate();
   const { report } = useReport();
-const abnormalTests =
-  report?.tests?.filter(
-    (test) => test.status !== "Normal"
-  ) || [];
+  const abnormalTests =
+    report?.tests?.filter((test) => test.status !== "Normal") || [];
 
-// Remove duplicate tests
-const uniqueAbnormalTests = Array.from(
-  new Map(
-    abnormalTests.map((test) => [
-      test.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "")
-        .replace("serumpotassium", "potassium")
-        .replace("potassiumserum", "potassium"),
-      test,
-    ])
-  ).values()
-);
-
-// Sort by severity
-const sortedTests = [...uniqueAbnormalTests].sort((a, b) => {
-  const order = {
-    High: 1,
-    Low: 2,
-    Borderline: 3,
-  };
-
-  return (
-    (order[a.status] || 99) -
-    (order[b.status] || 99)
+  // Remove duplicate tests
+  const uniqueAbnormalTests = Array.from(
+    new Map(
+      abnormalTests.map((test) => [
+        test.name
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "")
+          .replace("serumpotassium", "potassium")
+          .replace("potassiumserum", "potassium"),
+        test,
+      ]),
+    ).values(),
   );
-});
+
+  // Sort by severity
+  const sortedTests = [...uniqueAbnormalTests].sort((a, b) => {
+    const order = {
+      High: 1,
+      Low: 2,
+      Borderline: 3,
+    };
+
+    return (order[a.status] || 99) - (order[b.status] || 99);
+  });
 
   return (
     <section className="mt-10">
@@ -82,20 +77,21 @@ const sortedTests = [...uniqueAbnormalTests].sort((a, b) => {
           >
             <div className="flex items-center gap-4">
               <div
-  className={`h-3 w-3 rounded-full ${
-    test.status === "High"
-      ? "bg-red-500"
-      : test.status === "Low"
-      ? "bg-orange-500"
-      : "bg-amber-300"
-  }`}
-/>
+                className={`h-3 w-3 rounded-full ${
+                  test.status === "High"
+                    ? "bg-red-500"
+                    : test.status === "Low"
+                      ? "bg-orange-500"
+                      : "bg-amber-300"
+                }`}
+              />
 
               <div>
                 <h3 className="font-semibold text-white">{test.name}</h3>
 
                 <p className="text-sm text-slate-400">
                   {test.status} • {test.value}
+                  {test.unit ? ` ${test.unit}` : ""}
                 </p>
                 <p className="mt-1 text-xs text-cyan-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   View detailed report →

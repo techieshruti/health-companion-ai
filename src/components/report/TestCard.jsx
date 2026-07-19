@@ -17,12 +17,11 @@ const statusStyles = {
 
 function TestCard({ test, onViewDetails }) {
   const style = statusStyles[test.status] || statusStyles.Normal;
-  const [number, unit] = test.value.split(" ");
 
   return (
     <div
-  id={test.name.replace(/\s+/g, "-")}
-  className="
+      id={test.name.replace(/\s+/g, "-")}
+      className="
 group
 scroll-mt-28
 rounded-3xl
@@ -39,7 +38,7 @@ hover:border-cyan-400/40
 hover:bg-white/[0.08]
 hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
 "
->
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -68,10 +67,12 @@ hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
         <div className="flex items-center justify-between">
           <span className="text-slate-400">Result</span>
 
-          <div className="flex items-end gap-1">
-            <span className="text-2xl font-bold text-white">{number}</span>
+          <div className="flex items-end gap-2">
+            <span className="text-2xl font-bold text-white">{test.value}</span>
 
-            <span className="pb-1 text-sm text-slate-400">{unit}</span>
+            {test.unit && (
+              <span className="pb-1 text-sm text-slate-400">{test.unit}</span>
+            )}
           </div>
         </div>
 
@@ -87,7 +88,7 @@ hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
 
       {/* Button */}
       <button
-      onClick={() => onViewDetails(test)}
+        onClick={() => onViewDetails(test)}
         className="
     group
     flex
