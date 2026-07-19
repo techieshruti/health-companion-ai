@@ -10,6 +10,11 @@
 
 ---
 
+## 🚀 Live Demo
+
+🔗 https://health-companion-ai-two.vercel.app/
+
+
 ## 📌 Problem
 
 Medical reports are often difficult for non-medical users to understand.
