@@ -124,7 +124,9 @@ const loadingInterval = setInterval(() => {
 
       navigate("/dashboard");
     } catch (error) {
-      console.error(error);
+     console.error("Analyze Report Error:", error);
+
+alert(error.message);
       onInvalidReport();
     } finally {
       setIsAnalyzing(false);

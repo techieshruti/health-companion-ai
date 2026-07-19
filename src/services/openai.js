@@ -41,7 +41,7 @@ The JSON must follow this exact structure.
     "low": 0,
     "borderline": 0,
     "healthScore": 0,
-    abnormalTests:[],
+    abnormalTests":[],
     "mentionedTests":[],
     "overallSummary": ""
   },
@@ -53,12 +53,12 @@ The JSON must follow this exact structure.
       "range":"",
       "status":"",
       "explanation":"",
-      "reason":"",
+      "reason":[],
       "recommendation":"",
       "severity":"",
       "foods":[],
       "exercise":[],
-      "doctorAdvice":"",
+      "doctorAdvice":[],
       "questionsToAsk":[]
     }
   ]
@@ -84,7 +84,7 @@ Borderline
 
 Return a detailed explanation in the "explanation" field and keep short explanation in overallSummary field.
 
-The explanation MUST be 180–250 words in small paragraphs.
+The explanation MUST be 100-120 words in small paragraphs.
 
 Write in simple English.
 
@@ -184,9 +184,17 @@ Return ONLY JSON.`,
       temperature: 0.2,
     });
 
-    return JSON.parse(
-      completion.choices[0].message.content
-    );
+    // return JSON.parse(
+    //   completion.choices[0].message.content
+    // );
+
+    const aiResponse = completion.choices[0].message.content;
+
+console.log("========== GPT RESPONSE ==========");
+console.log(aiResponse);
+console.log("==================================");
+
+return JSON.parse(aiResponse);
   } catch (error) {
     console.error(error);
     throw error;

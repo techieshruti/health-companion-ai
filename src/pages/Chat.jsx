@@ -9,6 +9,22 @@ import { askHealthAssistant } from "../services/chatAI";
 import { useReport } from "../context/ReportContext";
 import BackgroundEffect from "../components/common/BackgroundEffect";
 
+const streamText = async (text, onUpdate) => {
+  const words = text.split(" ");
+
+  let currentText = "";
+
+  for (let i = 0; i < words.length; i++) {
+    currentText += words[i] + " ";
+
+    onUpdate(currentText);
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 35)
+    );
+  }
+};
+
 const Chat = () => {
   const { report } = useReport();
   const [input, setInput] = useState("");
@@ -32,13 +48,14 @@ You can ask me about:
   const [isTyping, setIsTyping] = useState(false);
   const messagesRef = useRef(null);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  
+ const sendMessage = () => {
+  if (!input.trim()) return;
 
-    askQuestion(input);
+  askQuestion(input);
 
-    setInput("");
-  };
+  setInput("");
+};
 
 useEffect(() => {
   window.scrollTo({
@@ -55,43 +72,71 @@ useEffect(() => {
   }, [messages, isTyping]);
 
 const askQuestion = async (question) => {
-  setMessages((prev) => [
-    ...prev,
+
+  setShowSuggestions(false);
+
+  const updatedMessages = [
+    ...messages,
     {
       role: "user",
       text: question,
       time: new Date(),
     },
-  ]);
+  ];
+
+  // Immediately show user message
+  setMessages(updatedMessages);
 
   setIsTyping(true);
 
   try {
-    const answer = await askHealthAssistant(report, question);
 
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "assistant",
-        text: answer,
-        time: new Date(),
-      },
-    ]);
+   const answer = await askHealthAssistant(
+  report,
+  updatedMessages
+);
+
+// Add empty assistant message
+setMessages([
+  ...updatedMessages,
+  {
+    role: "assistant",
+    text: "",
+    time: new Date(),
+  },
+]);
+
+// Hide typing indicator
+setIsTyping(false);
+
+// Animate the answer
+await streamText(answer, (partialText) => {
+  setMessages([
+    ...updatedMessages,
+    {
+      role: "assistant",
+      text: partialText,
+      time: new Date(),
+    },
+  ]);
+});
+
   } catch (error) {
+
     console.error(error);
 
-    setMessages((prev) => [
-      ...prev,
+    setMessages([
+      ...updatedMessages,
       {
         role: "assistant",
         text:
-          "Sorry, I couldn't analyze your question right now.",
+          "Sorry, I couldn't analyze your question.",
         time: new Date(),
       },
     ]);
-  } finally {
-    setIsTyping(false);
-  }
+
+  } finally { }
+
 };
 
   return (
@@ -100,7 +145,17 @@ const askQuestion = async (question) => {
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <ChatHeader />
+<ChatHeader />
 
+{/* Report Summary */}
+
+<div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
+  ...
+</div>
+
+<div
+  className={`overflow-hidden ...`}
+></div>
         <div
           className={`overflow-hidden transition-all duration-300 ${
             showSuggestions

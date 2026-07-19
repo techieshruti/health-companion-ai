@@ -10,6 +10,10 @@ function Home() {
   const [showInvalidModal, setShowInvalidModal] = useState(false);
 const handleReset = () => {
   setShowInvalidModal(false);
+   window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 };
 
   return (

@@ -1,6 +1,8 @@
 export const suggestedQuestions = [
-  "What should I improve?",
-  "Explain my Vitamin D result",
-  "Why is my LDL high?",
-  "How can I improve my health score?",
+  "Summarize my report",
+  "Which tests should I worry about?",
+  "Explain my most abnormal result",
+  "What foods should I eat?",
+  "Should I visit a doctor?",
+  "How can I improve my health score?"
 ];

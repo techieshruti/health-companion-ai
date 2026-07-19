@@ -5,7 +5,14 @@ const client = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-export async function askHealthAssistant(report, question) {
+export async function askHealthAssistant(report, messages) {
+    const conversation = messages
+  .map((message) => {
+    return `${message.role === "assistant" ? "Assistant" : "User"}:
+${message.text}`;
+  })
+  .join("\n\n");
+  
   const completion = await client.chat.completions.create({
     model: "gpt-4.1-mini",
 
@@ -33,17 +40,33 @@ Do not invent values.
       },
 
       {
-        role: "user",
-        content: `
-Uploaded Report:
+  role: "user",
+content: `
+You are an AI Health Assistant.
 
-${JSON.stringify(report)}
+Below is the patient's uploaded health report.
 
-Question:
+${JSON.stringify(report, null, 2)}
 
-${question}
+The conversation so far:
+
+${conversation}
+
+Instructions:
+
+1. Always answer ONLY using this report.
+2. If discussing any test, ALWAYS mention:
+   - Test Name
+   - User Value
+   - Normal Range
+   - Status
+3. Explain in simple English.
+4. Never invent report values.
+5. If the report doesn't contain the requested information, clearly say so.
+6. Use bullet points whenever helpful.
+7. End with one practical recommendation.
 `,
-      },
+},
     ],
 
     temperature: 0.3,
