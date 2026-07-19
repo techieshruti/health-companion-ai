@@ -43,8 +43,15 @@ export function normalizeTests(tests) {
     key = aliases[key] || key;
 
     if (!seen.has(key)) {
-      seen.set(key, test);
-    }
+  seen.set(key, test);
+} else {
+  const existing = seen.get(key);
+
+  // Prefer the object that has a reference range
+  if (!existing.range && test.range) {
+    seen.set(key, test);
+  }
+}
   }
 
   return [...seen.values()];

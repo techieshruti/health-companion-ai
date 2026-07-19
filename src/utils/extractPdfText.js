@@ -16,12 +16,22 @@ const totalPages = pdf.numPages;
     const page = await pdf.getPage(pageNo);
 
     const textContent = await page.getTextContent();
+let pageText = "";
+let lastY = null;
 
-    const pageText = textContent.items
-      .map((item) => item.str)
-      .join(" ");
+textContent.items.forEach((item) => {
+  if (lastY !== null && Math.abs(item.transform[5] - lastY) > 2) {
+    pageText += "\n";
+  }
 
-    fullText += pageText + "\n";
+  pageText += item.str + " ";
+
+  lastY = item.transform[5];
+});
+
+fullText += `\n========== PAGE ${pageNo} ==========\n`;
+fullText += pageText;
+fullText += "\n";
   }
 
   return {

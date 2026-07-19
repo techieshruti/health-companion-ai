@@ -9,6 +9,7 @@ import { useState, useRef, useEffect } from "react";
 import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
+import { normalizeTests } from "../../utils/normalizeTests";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { extractPdfText } from "../../utils/extractPdfText";
 
@@ -125,8 +126,15 @@ const loadingInterval = setInterval(() => {
       let extractedText = "";
 
       const { text, totalPages } = await extractPdfText(selectedFile);
+console.log(text);
 
       const extracted = await extractTests(text);
+      extracted.tests = normalizeTests(extracted.tests);
+
+      console.log(
+  "After normalization:",
+  extracted.tests.length
+);
 
 // const insights = await generateInsights(extracted);
 
