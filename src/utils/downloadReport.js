@@ -366,7 +366,7 @@ doc.roundedRect(
     doc.setFontSize(13);
     doc.setTextColor(25);
 
-    doc.text(test.name,cardX + 6 ,cardY+8);
+    doc.text(String(test.name || "-"), cardX + 6, cardY + 8);
 
     // Status Pill
     let bg=[34,197,94];
@@ -437,11 +437,7 @@ doc.setTextColor(20);
 
 const numberY = cardY + 18;
 
-doc.text(
-  value,
-  resultX,
-  numberY
-);
+doc.text(String(value), resultX, numberY);
 
 // Unit
 doc.setFont("helvetica", "normal");
@@ -453,11 +449,7 @@ const numberWidth = doc.getTextWidth(value);
 // Add a visible gap after the number
 const unitX = resultX + numberWidth + 6;
 
-doc.text(
-  unit,
-  unitX,
-  numberY
-);
+doc.text(String(unit), unitX, numberY);
 
 
 doc.setFont("helvetica", "normal");
@@ -482,13 +474,13 @@ doc.text(
     doc.setFontSize(9.5);
 
     doc.text(
-      test.recommendation,
-      cardX + 6,
-      cardY + 36,
-      {
-        maxWidth:72
-      }
-    );
+  String(test.recommendation || "No recommendation available."),
+  cardX + 6,
+  cardY + 36,
+  {
+    maxWidth: 72,
+  }
+);
   });
   const totalRows = Math.ceil(abnormalTests.length / 2);
 y += totalRows * 50 + 10;

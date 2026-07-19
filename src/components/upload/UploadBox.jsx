@@ -297,6 +297,7 @@ alert(error.message);
 <div
   className="
 mt-8
+mb-4
 rounded-2xl
 border
 border-cyan-400/20

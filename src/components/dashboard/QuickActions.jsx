@@ -6,6 +6,8 @@ import { useReport } from "../../context/ReportContext";
 function QuickActions({ tests }) {
   const navigate = useNavigate();
   const { report } = useReport();
+  console.log(report);
+console.log(report?.tests?.[0]);
 
   const actions = [
     {
@@ -24,7 +26,7 @@ function QuickActions({ tests }) {
       icon: <Download size={28} />,
       title: "Download Summary",
       description: "Export PDF report",
-      onClick: () => downloadReport(report),
+      onClick: () => {console.log("Report:", report); downloadReport(report);},
     },
     {
       icon: <Bot size={28} />,

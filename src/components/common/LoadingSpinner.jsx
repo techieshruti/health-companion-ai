@@ -8,13 +8,10 @@ function LoadingSpinner({ message }) {
       <div className="relative flex items-center justify-center">
 
         <div className="absolute h-24 w-24 rounded-full border border-cyan-400/20"></div>
-
         <div className="absolute h-24 w-24 rounded-full border-t-2 border-cyan-400 animate-spin"></div>
-
         <div className="absolute h-16 w-16 rounded-full bg-cyan-500/10 blur-xl animate-pulse"></div>
-
         <div className="relative z-10 text-3xl">
-         <Stethoscope className="w-7 h-7"/>
+         <Stethoscope className="w-7 h-7 ai-pulse"/>
         </div>
 
       </div>
