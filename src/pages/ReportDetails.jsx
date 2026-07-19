@@ -19,7 +19,6 @@ function ReportDetails() {
   const selectedTestName = searchParams.get("test");
   const filter = searchParams.get("filter");
   const testName = searchParams.get("test");
-
   const [activeFilter, setActiveFilter] = useState("All");
   const { report } = useReport();
   const tests = report?.tests || [];

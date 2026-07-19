@@ -1,9 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ReportContext = createContext();
 
 export function ReportProvider({ children }) {
-  const [report, setReport] = useState(null);
+  const [report, setReport] = useState(() => {
+  const saved = localStorage.getItem("healthReport");
+  return saved ? JSON.parse(saved) : null;
+});
+
+useEffect(() => {
+  if (report) {
+    localStorage.setItem("healthReport", JSON.stringify(report));
+  } else {
+    localStorage.removeItem("healthReport");
+  }
+}, [report]);
 
   return (
     <ReportContext.Provider

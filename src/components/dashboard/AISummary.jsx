@@ -110,31 +110,11 @@ function AISummary() {
 
         {/* Bottom Content */}
 
-        <div className="mt-5 pl-20">
+        <div className="mt-5 pl-20 sm:pl-0">
           <h2 className="text-3xl font-bold text-white">
             Health Report Overview
           </h2>
 
-          {/* <p className="mt-2 leading-8 text-slate-300">
-              {report.summary.overallSummary}
-              <span className="font-semibold text-white">
-                {summary?.totalTests} tests
-              </span>
-              . Most values are within the normal range. However,
-              <span className="font-semibold text-cyan-300">
-                {" "}{first || "No significant abnormalities"}{" "}
-              </span>
-              is low,
-              <span className="font-semibold text-cyan-300">
-                {" "}{second}{" "}
-              </span>
-              is slightly elevated, and
-              <span className="font-semibold text-cyan-300">
-                {" "}{third}{" "}
-              </span>
-              requires attention. No critical abnormalities were detected.
-
-            </p> */}
           <p className="mt-4 leading-8 text-slate-300">{renderSummary()}</p>
         </div>
       </div>

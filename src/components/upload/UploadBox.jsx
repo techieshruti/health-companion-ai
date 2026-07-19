@@ -189,6 +189,7 @@ function UploadBox({ onInvalidReport }) {
       report.summary.totalPages = totalPages;
 
       setReport(report);
+      localStorage.setItem("healthReport", JSON.stringify(report));
 
       navigate("/dashboard");
     } catch (error) {

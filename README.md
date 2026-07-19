@@ -7,7 +7,6 @@
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4.1--mini-black?logo=openai)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Styled-06B6D4?logo=tailwindcss)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -129,11 +128,15 @@ This significantly improves reliability and consistency.
 
 | Dashboard | Test Details |
 |-----------|--------------|
-| Add screenshot | Add screenshot |
+| ![Home](./screenshot/homepage.png) | ![Dashboard](./screenshot/Dashboard.png) |
 
-| Upload Screen | Health Summary |
+| Test Result | Quick Actions |
 |---------------|----------------|
-| Add screenshot | Add screenshot |
+| ![Test Details](./screenshot/Health_Score.png) | ![Quick Actions](./screenshot/quickaction.png) |
+
+| Report Details | AI Assistent |
+|---------------|----------------|
+| ![Test Details](./screenshot/reportdetails.png) | ![Quick Actions](./screenshot/Ai_assistent.png) |
 
 ---
 
