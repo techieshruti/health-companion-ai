@@ -4,10 +4,13 @@ import ChatHeader from "../components/chat/ChatHeader";
 import SuggestedQuestions from "../components/chat/SuggestedQuestions";
 import ChatMessages from "../components/chat/ChatMessages";
 import ChatInput from "../components/chat/ChatInput";
-import { suggestedQuestions, dummyAnswers } from "../data/chatData";
+import { suggestedQuestions } from "../data/chatData";
+import { askHealthAssistant } from "../services/chatAI";
+import { useReport } from "../context/ReportContext";
 import BackgroundEffect from "../components/common/BackgroundEffect";
 
 const Chat = () => {
+  const { report } = useReport();
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [messages, setMessages] = useState([
@@ -51,31 +54,45 @@ useEffect(() => {
     });
   }, [messages, isTyping]);
 
-  const askQuestion = (question) => {
+const askQuestion = async (question) => {
+  setMessages((prev) => [
+    ...prev,
+    {
+      role: "user",
+      text: question,
+      time: new Date(),
+    },
+  ]);
+
+  setIsTyping(true);
+
+  try {
+    const answer = await askHealthAssistant(report, question);
+
     setMessages((prev) => [
       ...prev,
       {
-        role: "user",
-        text: question,
+        role: "assistant",
+        text: answer,
         time: new Date(),
       },
     ]);
+  } catch (error) {
+    console.error(error);
 
-    setIsTyping(true);
-
-    setTimeout(() => {
-      setIsTyping(false);
-      setShowSuggestions(false);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          text: dummyAnswers[question] || "I'm still learning.",
-          time: new Date(),
-        },
-      ]);
-    }, 900);
-  };
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        text:
+          "Sorry, I couldn't analyze your question right now.",
+        time: new Date(),
+      },
+    ]);
+  } finally {
+    setIsTyping(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#071522] px-6 py-8">
