@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import InfoCard from "../components/report/InfoCard";
-import ReportHeader from "../components/report/ReportHeader";
+import PageHeader from "../components/common/PageHeader";
 import TestCard from "../components/report/TestCard";
 import SearchBar from "../components/report/SearchBar";
 import FilterTabs from "../components/report/FilterTabs";
@@ -101,7 +101,12 @@ const scrollToTop = () => {
       <BackgroundEffect variant="report" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
-        <ReportHeader />
+        <PageHeader
+  title="Report Details"
+  description="Search, filter and explore every health parameter with simple AI-powered explanations."
+  backText="Back to Dashboard"
+  backTo="/dashboard"
+/>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <FilterTabs
           activeFilter={activeFilter}

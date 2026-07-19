@@ -17,13 +17,13 @@ export async function analyzeReport(reportText) {
 You are an expert medical assistant.
 
 Your job is to analyze pathology reports.
-
 Do not return markdown.
-
-Do not explain anything.
-
 Return ONLY valid JSON.
-
+The response must be complete.
+Do not truncate the JSON.
+Do not stop early.
+Ensure every opening bracket and brace has a matching closing bracket.
+Before responding, verify the JSON is syntactically valid.
 The JSON must follow this exact structure.
 
 {
@@ -63,7 +63,38 @@ The JSON must follow this exact structure.
     }
   ]
 }
-  Rules:
+
+
+IMPORTANT
+
+Return EVERY laboratory parameter found in the report.
+The tests array must contain exactly one object for every laboratory parameter present in the report.
+Example:
+If the report contains 18 parameters, return 18 objects.
+If the report contains 29 parameters, return 29 objects.
+If the report contains 41 parameters, return 41 objects.
+Before returning the JSON:
+- Count the extracted laboratory parameters.
+- Ensure tests.length equals summary.totalTests.
+- If the counts do not match, regenerate the tests array before responding.
+
+Never omit a normal test.
+Normal tests and abnormal tests must both be included.
+Do not skip any laboratory parameter.
+
+If any patient information is missing from the report:
+Use an empty string ("") instead of guessing.
+
+Value rules:
+- Keep "value" exactly as written in the report.
+- Do not add units to "value".
+- Keep measurement units only inside the "range" field.
+
+If a laboratory parameter has no reference range in the report,
+return:
+"range":""
+
+Rules:
 - mentionedTests must contain every test name mentioned inside overallSummary.
 Example:
 "mentionedTests":[
@@ -79,17 +110,27 @@ Normal
 High
 Low
 Borderline
+Status matching rules:
+- If the value is within the reference range → Normal
+- If above the upper limit → High
+- If below the lower limit → Low
+- Use Borderline only when the report explicitly indicates a borderline result.
 
 - Explanation rules:
 
-Return a detailed explanation in the "explanation" field and keep short explanation in overallSummary field.
+Return a detailed explanation in the "explanation" field.
 
-The explanation MUST be 100-120 words in small paragraphs.
+overallSummary rules:
+- Keep it between 3-5 short sentences.
+- Mention only abnormal findings.
+- Do not repeat detailed explanations.
+- Mention the most important health concerns and one overall recommendation.
 
+For ABNORMAL tests (High, Low, Borderline):
+
+The explanation MUST be 60-80 words in small paragraphs.
 Write in simple English.
-
 Always follow this structure.
-
 1. Explain what this test measures.
 2. Explain why doctors order this test.
 3. Explain which organ, body system or disease this test is mainly related to.
@@ -110,13 +151,10 @@ Examples:
 Use friendly language.
 Do not repeat information.
 Do not use markdown.
-
 Return "reason" as an array.
 
 Provide 4–6 possible reasons.
-
 Example
-
 "reason":[
 "Vitamin D deficiency",
 "Limited sunlight exposure",
@@ -128,9 +166,7 @@ Example
 Return 6-8 foods.
 
 Do not explain.
-
 Example
-
 "foods":[
 "Eggs",
 "Salmon",
@@ -141,9 +177,7 @@ Example
 ]
 
 Return 3-5 suitable exercises.
-
 Example
-
 "exercise":[
 "Walking",
 "Cycling",
@@ -152,9 +186,16 @@ Example
 ]
 
 Return 3 concise medical recommendations.
+Recommendation rules:
 
-Example
+For abnormal tests:
+Return one concise recommendation (maximum 20 words).
+Example:
+"Increase Vitamin D intake and consult your doctor."
 
+doctorAdvice:
+Return 3 concise medical recommendations.
+Example:
 "doctorAdvice":[
 "Repeat the test after 8 weeks.",
 "Consult an endocrinologist.",
@@ -162,17 +203,24 @@ Example
 ]
 
 Return 3 questions the patient can ask the doctor.
-
 Example
-
 "questionsToAsk":[
 "Do I need another blood test?",
 "Should I take supplements?",
 "Could this be caused by another condition?"
 ]
 
+For NORMAL tests:
+- explanation: 15-25 words
+- reason:[]
+- foods:[]
+- exercise:[]
+- doctorAdvice:[]
+- questionsToAsk:[]
+- recommendation:"Maintain your current healthy lifestyle."
 
-Return ONLY JSON.`,
+Return ONLY JSON.
+`,
         },
 
         {
@@ -187,16 +235,17 @@ Return ONLY JSON.`,
     // return JSON.parse(
     //   completion.choices[0].message.content
     // );
-
-    const aiResponse = completion.choices[0].message.content;
+const aiResponse = completion.choices[0].message.content;
 
 console.log("========== GPT RESPONSE ==========");
 console.log(aiResponse);
 console.log("==================================");
 
-return JSON.parse(aiResponse);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  return JSON.parse(aiResponse);
+} catch (err) {
+  console.error("Invalid JSON returned by OpenAI");
+  console.error(aiResponse);
+  throw new Error("AI returned an invalid response. Please try again.");
+}
+
 }

@@ -1,31 +1,30 @@
-import { Bot } from "lucide-react";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ChatHeader = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <div className="mb-8 flex items-start justify-between rounded-3xl border border-cyan-400/20 bg-slate-900/60 p-8 backdrop-blur-xl">
-
-      <div className="mb-4 flex items-center gap-4">
-
-        <div className="rounded-2xl bg-cyan-500/10 p-3">
-          <Bot className="text-cyan-400" size={28} />
-        </div>
-
+    <div className="mb-8">
+      <div className="flex items-start justify-between">
+        {/* Left Content */}
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <p className="text-sm uppercase tracking-[0.2em] text-cyan-400">
+            AI HEALTH COMPANION
+          </p>
+
+          <h1 className="mt-2 text-4xl font-bold text-white">
             AI Health Assistant
           </h1>
 
-          <p className="mt-1 text-slate-400">
-            Ask anything about your blood report.
+          <p className="mt-3 max-w-2xl text-slate-400">
+            Ask anything about your uploaded health report in simple,
+            easy-to-understand language.
           </p>
         </div>
 
-      </div>
-<button
+        {/* Back Button */}
+        <button
           onClick={() => navigate("/dashboard")}
           className="
             inline-flex
@@ -54,7 +53,7 @@ const navigate = useNavigate();
           <ChevronLeft size={18} />
           Back to Dashboard
         </button>
-
+      </div>
     </div>
   );
 };

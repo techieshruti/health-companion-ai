@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import DashboardHeader from "../components/dashboard/DashboardHeader";
+// import DashboardHeader from "../components/dashboard/DashboardHeader";
+import PageHeader from "../components/common/PageHeader";
 import AISummary from "../components/dashboard/AISummary";
 import SummaryGrid from "../components/dashboard/SummaryGrid";
 import HealthScore from "../components/dashboard/HealthScore";
@@ -46,7 +47,12 @@ const scrollToTop = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
 
-        <DashboardHeader />
+        <PageHeader
+  title="AI Health Dashboard"
+  description="AI-generated insights and analysis from your uploaded health report."
+  backText="Back to Home"
+  backTo="/"
+/>
         <AISummary />
         <SummaryGrid />
         <HealthScore />

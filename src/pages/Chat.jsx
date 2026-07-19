@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Bot } from "lucide-react";
-import ChatHeader from "../components/chat/ChatHeader";
+import PageHeader from "../components/common/PageHeader";
 import SuggestedQuestions from "../components/chat/SuggestedQuestions";
 import ChatMessages from "../components/chat/ChatMessages";
 import ChatInput from "../components/chat/ChatInput";
@@ -129,93 +129,110 @@ You can ask me about:
   };
 
   return (
-    <div className="min-h-screen bg-[#071522] px-6 py-8">
+    <div className="relative  min-h-screen bg-[#071522] px-6 py-8">
       <BackgroundEffect variant="chat" />
 
-      <div className="relative z-10 mx-auto max-w-5xl">
-        <ChatHeader />
+      <div className="relative z-10 mx-auto max-w-7xl">
+       <PageHeader
+  title="AI Health Assistant"
+  description="Ask anything about your uploaded health report in simple, easy-to-understand language."
+  backText="Back to Dashboard"
+  backTo="/dashboard"
+/>
 
-        {/* Report Summary */}
+        <div className="mt-6 grid grid-cols-12 gap-6">
+          {/* left section */}
+          <div className="col-span-4 space-y-6">
+            {/* Report Summary */}
 
-        <div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
-          <h3 className="mb-3 text-lg font-semibold text-cyan-300">
-            Uploaded Report
-          </h3>
+            <div className="mb-4 rounded-2xl border border-cyan-400/20 bg-slate-900/40 p-4 backdrop-blur-xl">
+              <h3 className="mb-3 text-lg font-semibold text-cyan-300">
+                Uploaded Report
+              </h3>
 
-          <div className="grid grid-cols-2 gap-4 text-sm text-slate-300">
-            <div>
-              <p className="text-slate-400">Patient</p>
-              <p>{report?.patient?.name}</p>
-            </div>
+              <div className="grid grid-cols-2 gap-4 text-sm text-slate-300">
+                <div>
+                  <p className="text-slate-400">Patient</p>
+                  <p>{report?.patient?.name}</p>
+                </div>
 
-            <div>
-              <p className="text-slate-400">Health Score</p>
-              <p>{report?.summary?.healthScore}/100</p>
-            </div>
+                <div>
+                  <p className="text-slate-400">Health Score</p>
+                  <p>{report?.summary?.healthScore}/100</p>
+                </div>
 
-            <div>
-              <p className="text-slate-400">Tests</p>
-              <p>{report?.summary?.totalTests}</p>
-            </div>
+                <div>
+                  <p className="text-slate-400">Tests</p>
+                  <p>{report?.summary?.totalTests}</p>
+                </div>
 
-            <div>
-              <p className="text-slate-400">Need Attention</p>
-              <p>{report?.summary?.high + report?.summary?.low}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className={`overflow-hidden ...`}></div>
-        <div
-          className={`overflow-hidden transition-all duration-300 ${
-            showSuggestions
-              ? "max-h-40 opacity-100 mb-2"
-              : "max-h-0 opacity-0 mb-0"
-          }`}
-        >
-          <SuggestedQuestions
-            questions={suggestedQuestions}
-            onSelect={askQuestion}
-          />
-        </div>
-
-        {/* Chat Container */}
-
-        <div className="mt-4 flex h-[560px] flex-col rounded-3xl border border-cyan-400/15 bg-slate-900/40 backdrop-blur-xl">
-          {/* Scrollable Messages */}
-
-          <div
-            ref={messagesRef}
-            className="modal-scrollbar flex-1 space-y-6 overflow-y-auto p-6"
-          >
-            <ChatMessages messages={messages} />
-
-            {isTyping && (
-              <div className="flex justify-start animate-[fadeUp_.25s_ease]">
-                <div className="rounded-3xl border border-cyan-400/15 bg-slate-900 px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
-                      <Bot size={18} className="text-white" />
-                    </div>
-
-                    <span className="text-lg font-semibold text-cyan-300">
-                      AI
-                    </span>
-                    <div className="flex gap-1">
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400 [animation-delay:-0.3s]" />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400 [animation-delay:-0.15s]" />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400" />
-                    </div>
-                  </div>
+                <div>
+                  <p className="text-slate-400">Need Attention</p>
+                  <p>{report?.summary?.high + report?.summary?.low}</p>
                 </div>
               </div>
-            )}
+            </div>
+
+            {/* Suggestion */}
+            <div className={`overflow-hidden ...`}></div>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                showSuggestions
+                  ? "max-h-screen opacity-100 mb-2"
+                  : "max-h-0 opacity-0 mb-0"
+              }`}
+            >
+              <SuggestedQuestions
+                questions={suggestedQuestions}
+                onSelect={askQuestion}
+              />
+            </div>
           </div>
+          {/* Right section */}
+          <div className="col-span-8">
+            {/* Chat Container */}
 
-          {/* Fixed Input */}
+            <div className="mt-1 flex h-[650px] flex-col rounded-3xl border border-cyan-400/15 bg-slate-900/40 backdrop-blur-xl">
+              {/* Scrollable Messages */}
 
-          <div className="border-t border-cyan-400/10 p-5">
-            <ChatInput input={input} setInput={setInput} onSend={sendMessage} />
+              <div
+                ref={messagesRef}
+                className="modal-scrollbar flex-1 space-y-6 overflow-y-auto p-6"
+              >
+                <ChatMessages messages={messages} />
+
+                {isTyping && (
+                  <div className="flex justify-start animate-[fadeUp_.25s_ease]">
+                    <div className="rounded-3xl border border-cyan-400/15 bg-slate-900 px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
+                          <Bot size={18} className="text-white" />
+                        </div>
+
+                        <span className="text-lg font-semibold text-cyan-300">
+                          AI
+                        </span>
+                        <div className="flex gap-1">
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400 [animation-delay:-0.3s]" />
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400 [animation-delay:-0.15s]" />
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-cyan-400" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Fixed Input */}
+
+              <div className="border-t border-cyan-400/10 p-5">
+                <ChatInput
+                  input={input}
+                  setInput={setInput}
+                  onSend={sendMessage}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
