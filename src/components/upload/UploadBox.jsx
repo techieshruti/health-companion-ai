@@ -1,5 +1,8 @@
 import UploadButton from "./UploadButton";
-import { analyzeReport } from "../../services/openai";
+import {
+  extractTests,
+  generateInsights,
+} from "../../services/openai";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
@@ -123,53 +126,72 @@ const loadingInterval = setInterval(() => {
 
       const { text, totalPages } = await extractPdfText(selectedFile);
 
-      const report = await analyzeReport(text);
+      const extracted = await extractTests(text);
+
+// const insights = await generateInsights(extracted);
+
+// const report = {
+//   patient: extracted.patient,
+
+//  summary: {
+//   ...(insights.summary || {}),
+// },
+
+//   tests: extracted.tests.map((test) => {
+//     const ai = insights.tests.find(
+//       (t) => t.name === test.name
+//     );
+
+//     return {
+//       ...test,
+//       ...ai,
+//     };
+//   }),
+// };
+
+const report = {
+  patient: extracted.patient,
+  tests: extracted.tests,
+  summary: {},
+};
 
 const tests = report.tests || [];
 
 // Recalculate summary from tests
-report.summary.totalTests = tests.length;
+report.summary = {
+  totalTests: tests.length,
 
-report.summary.normal = tests.filter(
-  (t) => t.status === "Normal"
-).length;
+  normal: tests.filter(t => t.status === "Normal").length,
 
-report.summary.high = tests.filter(
-  (t) => t.status === "High"
-).length;
+  high: tests.filter(t => t.status === "High").length,
 
-report.summary.low = tests.filter(
-  (t) => t.status === "Low"
-).length;
+  low: tests.filter(t => t.status === "Low").length,
 
-report.summary.borderline = tests.filter(
-  (t) => t.status === "Borderline"
-).length;
+  borderline: tests.filter(t => t.status === "Borderline").length,
 
-const abnormalTests = tests.filter(
-  (t) => t.status !== "Normal"
-);
+  abnormalTests: tests
+    .filter(t => t.status !== "Normal")
+    .map(t => t.name),
 
-report.summary.abnormalTests = abnormalTests.map(
-  (t) => t.name
-);
+  mentionedTests: tests
+    .filter(t => t.status !== "Normal")
+    .map(t => t.name),
 
-report.summary.mentionedTests = abnormalTests.map(
-  (t) => t.name
-);
+  overallSummary: ""
+};
 
+// // Debug logs
+//   console.log("========== REPORT DEBUG ==========");
+//   console.log("Summary Total Tests:", report.summary.totalTests);
+//   console.log("Tests Array Length:", report.tests.length);
 
-// Debug logs
-  console.log("========== REPORT DEBUG ==========");
-  console.log("Summary Total Tests:", report.summary.totalTests);
-  console.log("Tests Array Length:", report.tests.length);
-
-  console.table(
-    report.tests.map((t, i) => ({
-      index: i,
-      name: t.name,
-      status: t.status,
-    })))
+//   console.table(
+//     report.tests.map((t, i) => ({
+//       index: i,
+//       name: t.name,
+//       status: t.status,
+//     }))
+//   );
 
       // Health score fallback
 //       if (report.summary.healthScore == null) {
