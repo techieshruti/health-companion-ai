@@ -1,6 +1,7 @@
 import { AlertTriangle, ChevronRight } from "lucide-react";
 import { useReport } from "../../context/ReportContext";
 import { useNavigate } from "react-router-dom";
+import { formatUnit } from "../../utils/formatUnit";
 
 function NeedsAttention() {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ function NeedsAttention() {
 
                 <p className="text-sm text-slate-400">
                   {test.status} • {test.value}
-                  {test.unit ? ` ${test.unit}` : ""}
+                  {test.unit ? ` ${formatUnit(test.unit)}` : ""}
                 </p>
                 <p className="mt-1 text-xs text-cyan-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   View detailed report →

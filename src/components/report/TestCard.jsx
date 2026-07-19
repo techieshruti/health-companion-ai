@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { formatUnit } from "../../utils/formatUnit";
 
 const statusStyles = {
   High: {
@@ -71,7 +72,7 @@ hover:shadow-[0_12px_30px_rgba(34,211,238,0.10)]
             <span className="text-2xl font-bold text-white">{test.value}</span>
 
             {test.unit && (
-              <span className="pb-1 text-sm text-slate-400">{test.unit}</span>
+              <span className="pb-1 text-sm text-slate-400">{formatUnit(test.unit)}</span>
             )}
           </div>
         </div>

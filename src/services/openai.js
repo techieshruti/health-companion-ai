@@ -185,5 +185,84 @@ console.log(
 }
 
 export async function generateInsights(extractedReport) {
+  try {
+    const completion = await client.chat.completions.create({
+      model: "gpt-4.1-mini",
+      temperature: 0,
 
+      response_format: {
+        type: "json_object",
+      },
+
+      messages: [
+        {
+          role: "system",
+          content: `
+You are an experienced physician.
+
+The laboratory tests have ALREADY been extracted.
+
+Do NOT calculate values.
+Do NOT calculate status.
+Do NOT change any value.
+Do NOT change any unit.
+Do NOT change any range.
+
+Only explain the tests.
+
+Return ONLY valid JSON.
+
+Return:
+
+{
+  "summary": {
+    "overallSummary": "",
+    "healthScore": 0
+  },
+
+  "tests": [
+    {
+      "name": "",
+
+      "explanation": "",
+
+      "reason": [],
+
+      "foods": [],
+
+      "exercise": [],
+
+      "doctorAdvice": [],
+
+      "questionsToAsk": []
+    }
+  ]
+}
+
+Rules:
+
+- Give explanations in simple English.
+- explanation should be 2-3 sentences.
+- reason must contain 2-4 possible causes.
+- foods should contain 4-6 foods.
+- exercise should contain 2-4 exercises.
+- doctorAdvice should contain 2-4 points.
+- questionsToAsk should contain 2-4 questions.
+- healthScore should be between 0 and 100.
+- overallSummary should be 2-3 sentences.
+`,
+        },
+
+        {
+          role: "user",
+          content: JSON.stringify(extractedReport),
+        },
+      ],
+    });
+
+    return JSON.parse(completion.choices[0].message.content);
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to generate AI insights.");
+  }
 }

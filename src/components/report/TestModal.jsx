@@ -7,6 +7,7 @@ import {
   Salad,
 } from "lucide-react";
 import { useEffect } from "react";
+import { formatUnit } from "../../utils/formatUnit";
 
 const statusStyles = {
   High: "bg-red-500/20 border border-red-400/30 text-red-200",
@@ -73,7 +74,7 @@ function TestModal({ test, onClose }) {
 
                     {test.unit && (
                       <span className="ml-2 text-base font-normal text-slate-400">
-                        {test.unit}
+                        {formatUnit(test.unit)}
                       </span>
                     )}
                   </p>

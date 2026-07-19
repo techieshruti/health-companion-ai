@@ -142,31 +142,22 @@ console.log(text);
   extracted.tests.length
 );
 
-// const insights = await generateInsights(extracted);
-
-// const report = {
-//   patient: extracted.patient,
-
-//  summary: {
-//   ...(insights.summary || {}),
-// },
-
-//   tests: extracted.tests.map((test) => {
-//     const ai = insights.tests.find(
-//       (t) => t.name === test.name
-//     );
-
-//     return {
-//       ...test,
-//       ...ai,
-//     };
-//   }),
-// };
-
+const insights = await generateInsights(extracted);
 const report = {
   patient: extracted.patient,
-  tests: extracted.tests,
-  summary: {},
+
+  summary: insights.summary,
+
+  tests: extracted.tests.map((test) => {
+    const ai = insights.tests.find(
+      (item) => item.name === test.name
+    );
+
+    return {
+      ...test,
+      ...ai,
+    };
+  }),
 };
 
 const tests = report.tests || [];
@@ -191,7 +182,8 @@ report.summary = {
     .filter(t => t.status !== "Normal")
     .map(t => t.name),
 
-  overallSummary: ""
+  overallSummary:
+  insights.summary?.overallSummary || ""
 };
 
 // // Debug logs
@@ -222,7 +214,9 @@ const deduction =
   report.summary.low * 2 +
   report.summary.borderline * 1;
 
-report.summary.healthScore = Math.max(100 - deduction, 0);
+report.summary.healthScore =
+  insights.summary?.healthScore ??
+  Math.max(100 - deduction, 0);
 
       report.summary.totalPages = totalPages;
 
