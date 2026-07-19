@@ -156,24 +156,6 @@ const aiResponse = completion.choices[0].message.content;
 
 const report = JSON.parse(aiResponse);
 
-console.log("========== GPT RESPONSE ==========");
-console.log("Total Tests:", report.tests.length);
-
-console.table(
-  report.tests.map((t, index) => ({
-    index,
-    name: t.name,
-    value: t.value,
-    range: t.range,
-    unit: t.unit,
-  }))
-);
-
-console.log(
-  "Unique Test Names:",
-  new Set(report.tests.map(t => t.name)).size
-);
-
   return report;
   
 } catch (err) {

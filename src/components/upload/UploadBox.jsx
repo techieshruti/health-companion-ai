@@ -1,15 +1,12 @@
 import UploadButton from "./UploadButton";
-import {
-  extractTests,
-  generateInsights,
-} from "../../services/openai";
+import { extractTests, generateInsights } from "../../services/openai";
 import DragDropArea from "./DragDropArea";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { sampleReport } from "../../data/sampleReport";
 import { useReport } from "../../context/ReportContext";
 import FilePreview from "./FilePreview";
-import { normalizeTests, normalizeTestName, } from "../../utils/normalizeTests";
+import { normalizeTests, normalizeTestName } from "../../utils/normalizeTests";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { extractPdfText } from "../../utils/extractPdfText";
 import { calculateStatus } from "../../utils/calculateStatus";
@@ -20,7 +17,7 @@ const loadingMessages = [
   "Reading blood report...",
   "Understanding your health...",
   "Generating AI insights...",
-  "Preparing dashboard..."
+  "Preparing dashboard...",
 ];
 
 function UploadBox({ onInvalidReport }) {
@@ -34,11 +31,11 @@ function UploadBox({ onInvalidReport }) {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   useEffect(() => {
-  window.scrollTo({
-    top: 0,
-    behavior: "instant",
-  });
-}, []);
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
 
   // handle upload button click
   const handleUploadClick = () => {
@@ -54,11 +51,11 @@ function UploadBox({ onInvalidReport }) {
     if (validateFile(file)) {
       setSelectedFile(file);
       setTimeout(() => {
-  analyzeButtonRef.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-  });
-}, 300);
+        analyzeButtonRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 300);
       setError("");
     } else {
       setSelectedFile(null);
@@ -72,11 +69,11 @@ function UploadBox({ onInvalidReport }) {
     if (validateFile(file)) {
       setSelectedFile(file);
       setTimeout(() => {
-  analyzeButtonRef.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-  });
-}, 150);
+        analyzeButtonRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 150);
       setError("");
     } else {
       setSelectedFile(null);
@@ -112,114 +109,82 @@ function UploadBox({ onInvalidReport }) {
 
     setIsAnalyzing(true);
 
-let messageIndex = 0;
+    let messageIndex = 0;
 
-setLoadingMessage(loadingMessages[0]);
+    setLoadingMessage(loadingMessages[0]);
 
-const loadingInterval = setInterval(() => {
-  messageIndex++;
+    const loadingInterval = setInterval(() => {
+      messageIndex++;
 
-  if (messageIndex < loadingMessages.length) {
-    setLoadingMessage(loadingMessages[messageIndex]);
-  }
-}, 1800);
+      if (messageIndex < loadingMessages.length) {
+        setLoadingMessage(loadingMessages[messageIndex]);
+      }
+    }, 1800);
 
     try {
       let extractedText = "";
 
       const { text, totalPages } = await extractPdfText(selectedFile);
-console.log(text);
 
       const extracted = await extractTests(text);
       extracted.tests = normalizeTests(extracted.tests);
 
-      extracted.tests = extracted.tests.map(test => ({
-  ...test,
-  status: calculateStatus(test.value, test.range),
-}));
+      extracted.tests = extracted.tests.map((test) => ({
+        ...test,
+        status: calculateStatus(test.value, test.range),
+      }));
 
-      console.log(
-  "After normalization:",
-  extracted.tests.length
-);
+      const insights = await generateInsights(extracted);
+      const report = {
+        patient: extracted.patient,
 
-const insights = await generateInsights(extracted);
-const report = {
-  patient: extracted.patient,
+        summary: insights.summary,
 
-  summary: insights.summary,
+        tests: extracted.tests.map((test) => {
+          const ai = insights.tests.find(
+            (item) =>
+              normalizeTestName(item.name) === normalizeTestName(test.name),
+          );
 
-  tests: extracted.tests.map((test) => {
-   const ai = insights.tests.find(
-  (item) =>
-    normalizeTestName(item.name) ===
-    normalizeTestName(test.name)
-);
+          return {
+            ...test,
+            ...ai,
+          };
+        }),
+      };
 
-    return {
-      ...test,
-      ...ai,
-    };
-  }),
-};
+      const tests = report.tests || [];
 
-const tests = report.tests || [];
+      // Recalculate summary from tests
+      report.summary = {
+        totalTests: tests.length,
 
-// Recalculate summary from tests
-report.summary = {
-  totalTests: tests.length,
+        normal: tests.filter((t) => t.status === "Normal").length,
 
-  normal: tests.filter(t => t.status === "Normal").length,
+        high: tests.filter((t) => t.status === "High").length,
 
-  high: tests.filter(t => t.status === "High").length,
+        low: tests.filter((t) => t.status === "Low").length,
 
-  low: tests.filter(t => t.status === "Low").length,
+        borderline: tests.filter((t) => t.status === "Borderline").length,
 
-  borderline: tests.filter(t => t.status === "Borderline").length,
+        abnormalTests: tests
+          .filter((t) => t.status !== "Normal")
+          .map((t) => t.name),
 
-  abnormalTests: tests
-    .filter(t => t.status !== "Normal")
-    .map(t => t.name),
+        mentionedTests: tests
+          .filter((t) => t.status !== "Normal")
+          .map((t) => t.name),
 
-  mentionedTests: tests
-    .filter(t => t.status !== "Normal")
-    .map(t => t.name),
+        overallSummary: insights.summary?.overallSummary || "",
+      };
 
-  overallSummary:
-  insights.summary?.overallSummary || ""
-};
+      const deduction =
+        report.summary.high * 4 +
+        report.summary.low * 2 +
+        report.summary.borderline * 1;
 
-// // Debug logs
-//   console.log("========== REPORT DEBUG ==========");
-//   console.log("Summary Total Tests:", report.summary.totalTests);
-//   console.log("Tests Array Length:", report.tests.length);
-
-//   console.table(
-//     report.tests.map((t, i) => ({
-//       index: i,
-//       name: t.name,
-//       status: t.status,
-//     }))
-//   );
-
-      // Health score fallback
-//       if (report.summary.healthScore == null) {
-//   const deduction =
-//     report.summary.high * 8 +
-//     report.summary.low * 5 +
-//     report.summary.borderline * 3;
-
-//   report.summary.healthScore = Math.max(100 - deduction, 0);
-// }
-
-const deduction =
-  report.summary.high * 4 +
-  report.summary.low * 2 +
-  report.summary.borderline * 1;
-
-report.summary.healthScore =
-  insights.summary?.healthScore ??
-  Math.max(100 - deduction, 0);
+      report.summary.healthScore =
+        insights.summary?.healthScore ?? Math.max(100 - deduction, 0);
 
       report.summary.totalPages = totalPages;
 
@@ -227,9 +192,9 @@ report.summary.healthScore =
 
       navigate("/dashboard");
     } catch (error) {
-     console.error("Analyze Report Error:", error);
+      console.error("Analyze Report Error:", error);
 
-alert(error.message);
+      alert(error.message);
       onInvalidReport();
     } finally {
       setIsAnalyzing(false);
@@ -294,8 +259,8 @@ alert(error.message);
           {error}
         </div>
       )}
-<div
-  className="
+      <div
+        className="
 mt-8
 mb-4
 rounded-2xl
@@ -304,24 +269,24 @@ border-cyan-400/20
 bg-cyan-500/5
 p-6
 "
->
-  <h3 className="text-lg flex font-semibold text-white">
-    <NotepadText className="mr-2"/> Don't have a health report?
-  </h3>
+      >
+        <h3 className="text-lg flex font-semibold text-white">
+          <NotepadText className="mr-2" /> Don't have a health report?
+        </h3>
 
-  <p className="mt-2 text-sm leading-6 text-slate-400">
-    Explore the app instantly using our sample health report and experience
-    AI-powered analysis, explanations and recommendations.
-  </p>
+        <p className="mt-2 text-sm leading-6 text-slate-400">
+          Explore the app instantly using our sample health report and
+          experience AI-powered analysis, explanations and recommendations.
+        </p>
 
-  <button
-    onClick={() => {
-      setError("");
-      setSelectedFile(null);
-      setReport(sampleReport);
-      navigate("/dashboard");
-    }}
-    className="
+        <button
+          onClick={() => {
+            setError("");
+            setSelectedFile(null);
+            setReport(sampleReport);
+            navigate("/dashboard");
+          }}
+          className="
     mt-4
 inline-flex
 items-center
@@ -344,22 +309,22 @@ hover:-translate-y-1
 hover:shadow-cyan-400/40
 active:scale-[0.98]
 "
-  >
-    Explore Demo Report
-  </button>
-</div>
+        >
+          Explore Demo Report
+        </button>
+      </div>
 
       <div className="mt-6">
         {isAnalyzing ? (
-  <LoadingSpinner message={loadingMessage} />
-) : (
-  <FilePreview file={selectedFile} />
-)}
+          <LoadingSpinner message={loadingMessage} />
+        ) : (
+          <FilePreview file={selectedFile} />
+        )}
       </div>
 
       {selectedFile && !isAnalyzing && (
         <button
-        ref={analyzeButtonRef}
+          ref={analyzeButtonRef}
           onClick={handleAnalyzeReport}
           className="
 mt-8

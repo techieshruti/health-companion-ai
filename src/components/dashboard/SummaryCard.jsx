@@ -1,4 +1,3 @@
-
 function SummaryCard({ icon, title, value, color, bg }) {
   const Icon = icon;
   return (
@@ -21,7 +20,6 @@ function SummaryCard({ icon, title, value, color, bg }) {
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
 
       <div className="relative flex flex-col items-center text-center">
-
         {/* Icon */}
         <div
           className={`
@@ -36,19 +34,16 @@ border-white/10
 ${bg}
 `}
         >
-        <Icon className={`w-7 h-7 ${color}`} />
+          <Icon className={`w-7 h-7 ${color}`} />
         </div>
 
         {/* Number */}
-        <h2 className="mt-3 text-3xl font-bold text-white">
-          {value}
-        </h2>
+        <h2 className="mt-3 text-3xl font-bold text-white">{value}</h2>
 
         {/* Label */}
         <p className="mt-1 text-xs uppercase tracking-[0.15em] text-slate-400">
           {title}
         </p>
-
       </div>
     </div>
   );

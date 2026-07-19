@@ -5,7 +5,7 @@ function LoadingSpinner({ message }) {
     <div className="mt-10 flex flex-col items-center">
 
       {/* Outer Ring */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative mt-6 flex items-center justify-center">
 
         <div className="absolute h-24 w-24 rounded-full border border-cyan-400/20"></div>
         <div className="absolute h-24 w-24 rounded-full border-t-2 border-cyan-400 animate-spin"></div>
@@ -16,7 +16,7 @@ function LoadingSpinner({ message }) {
 
       </div>
 
-      <h3 className="mt-8 text-xl font-semibold text-white">
+      <h3 className="mt-12 text-xl font-semibold text-white">
         AI is analyzing your report
       </h3>
 

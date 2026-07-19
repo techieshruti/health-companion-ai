@@ -413,9 +413,8 @@ doc.text(
     doc.setFontSize(10);
 
     // ---------- Result ----------
-
-const value = test.value.split(" ")[0];
-const unit = test.value.replace(value, "").trim();
+const value = String(test.value ?? "");
+const unit = String(test.unit ?? "");
 
 const resultX = cardX + 56;
 
@@ -444,7 +443,7 @@ doc.setFont("helvetica", "normal");
 doc.setFontSize(9);
 doc.setTextColor(70);
 
-const numberWidth = doc.getTextWidth(value);
+const numberWidth = doc.getTextWidth(String(value));
 
 // Add a visible gap after the number
 const unitX = resultX + numberWidth + 6;
@@ -536,7 +535,7 @@ autoTable(doc, {
   body: tests.map((test) => [
     test.name,
     test.status,
-    test.value,
+    `${test.value} ${test.unit ?? ""}`.trim(),
     test.range,
   ]),
 

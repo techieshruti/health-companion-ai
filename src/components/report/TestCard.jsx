@@ -28,7 +28,7 @@ scroll-mt-28
 rounded-3xl
 border
 h-full
-min-h-[340px]
+min-h-[300px]
 flex
 flex-col
 border-cyan-400/20
