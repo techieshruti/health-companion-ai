@@ -6,8 +6,6 @@ import { useReport } from "../../context/ReportContext";
 function QuickActions({ tests }) {
   const navigate = useNavigate();
   const { report } = useReport();
-  console.log(report);
-console.log(report?.tests?.[0]);
 
   const actions = [
     {

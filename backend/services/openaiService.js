@@ -200,17 +200,11 @@ Return:
   "tests": [
     {
       "name": "",
-
       "explanation": "",
-
       "reason": [],
-
       "foods": [],
-
       "exercise": [],
-
       "doctorAdvice": [],
-
       "questionsToAsk": []
     }
   ]
@@ -227,20 +221,21 @@ Mention:
 - why maintaining this level is beneficial
 
 For ABNORMAL tests include:
-1. What this test measures.
-2. Which organ, body system, or disease it is mainly related to.
-3. What this result could mean.
-5. What symptoms may occur if it remains abnormal.
+1. Explain in 4-6 friendly sentences.
+2. What this test measures.
+3. Which organ, body system, or disease it is mainly related to.
+4. What this result could mean.
+6. What symptoms may occur if it remains abnormal.
 Keep explanations simple enough for a non-medical person.
 
 Avoid unnecessary concern.
 - reason must contain 2-4 possible causes.
-- foods should contain 4-6 foods.
+- foods should contain 4-5 foods.
 - exercise should contain 2-4 exercises.
-- doctorAdvice should contain 2-4 points.
-- questionsToAsk should contain 2-4 questions.
+- doctorAdvice should contain 2-3 points.
+- questionsToAsk should contain 2-3 questions.
 - healthScore should be between 0 and 100.
-- overallSummary should be 2-3 sentences.
+- overallSummary should be 4-5 sentences.
 `,
         },
 
