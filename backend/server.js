@@ -28,6 +28,12 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post("/test", (req, res) => {
+  res.json({
+    message: "Server POST is working",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
