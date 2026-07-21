@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"vite\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -15,7 +15,6 @@
     "jspdf-autotable": "^5.0.8",
     "lucide": "^1.24.0",
     "lucide-react": "^1.24.0",
-    "openai": "^6.48.0",
     "pdfjs-dist": "^6.1.200",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
@@ -28,10 +27,24 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "concurrently": "^10.0.3",
     "eslint": "^10.6.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
     "vite": "^8.1.1"
-  }
+  },
+  "description": "> Upload your blood test report and receive AI-powered explanations, health insights, lifestyle recommendations, and an easy-to-understand health dashboard.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techieshruti/health-companion-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/techieshruti/health-companion-ai/issues"
+  },
+  "homepage": "https://github.com/techieshruti/health-companion-ai#readme"
 }
