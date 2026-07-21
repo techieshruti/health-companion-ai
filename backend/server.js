@@ -14,6 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 // All AI routes
+app.use("/api", (req, res, next) => {
+  console.log("API middleware reached:", req.method, req.originalUrl);
+  next();
+});
+
 app.use("/api", reportRoutes);
 app.use("/api/chat", chatRoutes);
 
