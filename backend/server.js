@@ -12,11 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.originalUrl}`);
-  next();
-});
-
 app.use("/api", reportRoutes);
 app.use("/api/chat", chatRoutes);
 
@@ -27,12 +22,6 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
-app.get("/version", (req, res) => {
-  res.json({
-    version: "21-July-2026-v1"
-  });
-});
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
