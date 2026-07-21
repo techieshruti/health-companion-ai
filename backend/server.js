@@ -1,37 +1,22 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import OpenAI from "openai";
+import reportRoutes from "./routes/reportRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 dotenv.config();
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+// All AI routes
+app.use("/api", reportRoutes);
+app.use("/api/chat", chatRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-app.post("/api/chat", async (req, res) => {
-  try {
-    const { prompt } = req.body;
-
-    const response = await client.responses.create({
-      model: "gpt-4.1-mini",
-      input: prompt,
-    });
-
-    res.json({
-      answer: response.output_text,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "Something went wrong",
-    });
-  }
-});
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
-
-
