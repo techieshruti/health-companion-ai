@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import reportRoutes from "./routes/reportRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 
+console.log("reportRoutes =", reportRoutes);
+
 dotenv.config();
 
 const app = express();
@@ -32,22 +34,6 @@ app.post("/test", (req, res) => {
   res.json({
     message: "Server POST is working",
   });
-});
-
-app._router.stack.forEach((middleware) => {
-  if (middleware.route) {
-    console.log(
-      `${Object.keys(middleware.route.methods).join(",").toUpperCase()} ${middleware.route.path}`
-    );
-  } else if (middleware.name === "router") {
-    middleware.handle.stack.forEach((handler) => {
-      if (handler.route) {
-        console.log(
-          `${Object.keys(handler.route.methods).join(",").toUpperCase()} ${handler.route.path}`
-        );
-      }
-    });
-  }
 });
 
 app.listen(PORT, () => {

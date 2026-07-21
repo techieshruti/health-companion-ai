@@ -12,12 +12,6 @@ router.get("/ping", (req, res) => {
   });
 });
 
-router.get("/ping", (req, res) => {
-  res.json({
-    message: "Report routes are working",
-  });
-});
-
 router.post("/extract-tests", async (req, res) => {
   try {
     const { reportText } = req.body;
