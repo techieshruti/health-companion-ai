@@ -17,6 +17,17 @@ app.use("/api/chat", chatRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "OK",
+    routes: [
+      "/api/extract-tests",
+      "/api/generate-insights",
+      "/api/chat"
+    ]
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
