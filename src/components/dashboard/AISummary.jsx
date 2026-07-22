@@ -66,15 +66,17 @@ function AISummary() {
     >
       {/* Left Accent */}
       <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-cyan-400 to-blue-500"></div>
-      <div className="p-6">
+      <div className="p-6 sm:p-6">
         {/* Top Row */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:items-center sm:gap-4">
           <div
             className="
         flex
-        h-16
-        w-16
+        h-14
+        w-14
+        sm:h-16
+sm:w-16
         shrink-0
         items-center
         justify-center
@@ -84,7 +86,7 @@ function AISummary() {
         bg-cyan-400/10
       "
           >
-            <Bot className="h-8 w-8 text-cyan-300 ai-pulse" />
+            <Bot size={26} className="sm:h-8 sm:w-8 text-cyan-300 ai-pulse" />
           </div>
 
           <span
@@ -95,9 +97,12 @@ function AISummary() {
         border
         border-cyan-400/20
         bg-cyan-400/10
-        px-6
-        py-3
-        text-md
+        px-3
+py-2
+text-[10px]
+sm:px-6
+sm:py-3
+sm:text-sm
         font-medium
         uppercase
         tracking-wide
@@ -110,7 +115,7 @@ function AISummary() {
 
         {/* Bottom Content */}
 
-        <div className="mt-5 pl-20 sm:pl-0">
+        <div className="mt-5 pl-0 sm:pl-20 sm:pl-0">
           <h2 className="text-3xl font-bold text-white">
             Health Report Overview
           </h2>

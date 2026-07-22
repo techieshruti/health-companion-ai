@@ -3,16 +3,16 @@ import { useReport } from "../../context/ReportContext";
 
 function HealthScore() {
   const { report } = useReport();
-const score = report?.summary?.healthScore ?? 0;
+  const score = report?.summary?.healthScore ?? 0;
 
   const label =
-  score >= 90
-    ? "Excellent"
-    : score >= 75
-    ? "Good"
-    : score >= 60
-    ? "Fair"
-    : "Needs Attention";
+    score >= 90
+      ? "Excellent"
+      : score >= 75
+        ? "Good"
+        : score >= 60
+          ? "Fair"
+          : "Needs Attention";
 
   return (
     <section className="mt-10">
@@ -21,9 +21,7 @@ const score = report?.summary?.healthScore ?? 0;
           OVERVIEW
         </p>
 
-        <h2 className="mt-2 text-3xl font-bold text-white">
-          Health Score
-        </h2>
+        <h2 className="mt-2 text-3xl font-bold text-white">Health Score</h2>
 
         <p className="mt-2 text-slate-400">
           A quick snapshot of your overall health based on the uploaded report.
@@ -37,20 +35,20 @@ const score = report?.summary?.healthScore ?? 0;
           border-cyan-400/15
           bg-white/5
           backdrop-blur-xl
-          p-8
+          p-6 sm:p-8
           shadow-[0_10px_40px_rgba(34,211,238,0.08)]
         "
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-
           {/* Left */}
-          <div className="flex items-center gap-5">
-
+          <div className="flex items-center gap-3 sm:gap-5">
             <div
               className="
                 flex
-                h-16
+                h-14
                 w-16
+                sm:h-16
+sm:w-16
                 items-center
                 justify-center
                 rounded-2xl
@@ -60,11 +58,14 @@ const score = report?.summary?.healthScore ?? 0;
                 text-red-400
               "
             >
-              <HeartPulse size={30} className="text-red-400 ai-pulse"/>
+              <HeartPulse
+                size={26}
+                className="text-red-400 ai-pulse sm:h-[30px] sm:w-[30px]"
+              />
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-lg sm:text-xl font-semibold text-white">
                 Overall Health Score
               </h3>
 
@@ -72,16 +73,12 @@ const score = report?.summary?.healthScore ?? 0;
                 Based on your uploaded report
               </p>
             </div>
-
           </div>
 
           {/* Right */}
           <div className="w-full md:w-80">
-
             <div className="flex items-end justify-between">
-              <span className="text-5xl font-bold text-white">
-                {score}
-              </span>
+              <span className="text-5xl font-bold text-white">{score}</span>
 
               <span className="mb-1 text-cyan-300 font-medium text-2xl">
                 {label}
@@ -99,9 +96,7 @@ const score = report?.summary?.healthScore ?? 0;
               <span>0</span>
               <span>100</span>
             </div>
-
           </div>
-
         </div>
       </div>
     </section>

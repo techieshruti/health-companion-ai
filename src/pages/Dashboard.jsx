@@ -51,7 +51,7 @@ const scrollToTop = () => {
         <PageHeader
   title="AI Health Dashboard"
   description="AI-generated insights and analysis from your uploaded health report."
-  backText="Back to Home"
+  backText="Home"
   backTo="/"
 />
         <AISummary />

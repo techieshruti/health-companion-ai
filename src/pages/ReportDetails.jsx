@@ -104,7 +104,7 @@ function ReportDetails() {
           <PageHeader
             title="Report Details"
             description="Search, filter and explore every health parameter with simple AI-powered explanations."
-            backText="Back to Dashboard"
+            backText="Dashboard"
             backTo="/dashboard"
           />
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

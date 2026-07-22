@@ -158,7 +158,7 @@ setTimeout(() => {
        <PageHeader
   title="AI Health Assistant"
   description="Ask anything about your uploaded health report in simple, easy-to-understand language."
-  backText="Back to Report"
+  backText="Report"
   backTo="/report-details"
 />
 

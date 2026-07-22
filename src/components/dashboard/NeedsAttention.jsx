@@ -68,6 +68,8 @@ function NeedsAttention() {
     backdrop-blur-xl
     px-5
     py-4
+    max-[420px]:px-4
+max-[420px]:py-3
     transition-all
     duration-300
     hover:-translate-y-[2px]
