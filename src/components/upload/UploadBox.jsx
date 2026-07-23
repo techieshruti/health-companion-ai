@@ -20,6 +20,69 @@ const loadingMessages = [
   "Preparing dashboard...",
 ];
 
+const isValidBloodReport = (extracted) => {
+  const tests = extracted?.tests;
+
+  if (!Array.isArray(tests) || tests.length < 2) {
+    return false;
+  }
+
+  const knownBloodTests = [
+    "hemoglobin",
+    "haemoglobin",
+    "wbc",
+    "white blood cell",
+    "rbc",
+    "red blood cell",
+    "platelet",
+    "hematocrit",
+    "haematocrit",
+    "hct",
+    "mcv",
+    "mch",
+    "mchc",
+    "rdw",
+    "glucose",
+    "blood sugar",
+    "hba1c",
+    "cholesterol",
+    "triglyceride",
+    "hdl",
+    "ldl",
+    "vldl",
+    "tsh",
+    "t3",
+    "t4",
+    "thyroid",
+    "vitamin d",
+    "vitamin b12",
+    "creatinine",
+    "urea",
+    "uric acid",
+    "bilirubin",
+    "albumin",
+    "protein",
+    "sgot",
+    "sgpt",
+    "ast",
+    "alt",
+    "alkaline phosphatase",
+    "sodium",
+    "potassium",
+    "calcium",
+    "iron",
+    "ferritin",
+  ];
+
+  const matchedTests = tests.filter((test) => {
+    const name = String(test?.name || "").toLowerCase();
+
+    return knownBloodTests.some((knownTest) => name.includes(knownTest));
+  });
+
+  return matchedTests.length >= 2;
+};
+
 function UploadBox({ onInvalidReport }) {
   const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
   const analyzeButtonRef = useRef(null);
@@ -127,6 +190,20 @@ function UploadBox({ onInvalidReport }) {
       const { text, totalPages } = await extractPdfText(selectedFile);
 
       const extracted = await extractTests(text);
+
+      // Validate BEFORE generating insights or navigating to dashboard.
+      if (!isValidBloodReport(extracted)) {
+        setSelectedFile(null);
+
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+
+        onInvalidReport();
+
+        return;
+      }
+
       extracted.tests = normalizeTests(extracted.tests);
 
       extracted.tests = extracted.tests.map((test) => ({
@@ -195,8 +272,10 @@ function UploadBox({ onInvalidReport }) {
     } catch (error) {
       console.error("Analyze Report Error:", error);
 
-      alert(error.message);
-      onInvalidReport();
+      setError(
+    error.message ||
+      "Something went wrong while analyzing the report. Please try again."
+  );
     } finally {
       setIsAnalyzing(false);
       clearInterval(loadingInterval);
