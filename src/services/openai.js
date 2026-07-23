@@ -11,11 +11,19 @@ export async function extractTests(reportText) {
     }),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to extract tests.");
+    const error = new Error(
+      data.error || "Failed to extract tests."
+    );
+
+    error.code = data.code;
+
+    throw error;
   }
 
-  return await response.json();
+  return data;
 }
 
 export async function generateInsights(extractedReport) {

@@ -272,6 +272,17 @@ function UploadBox({ onInvalidReport }) {
     } catch (error) {
       console.error("Analyze Report Error:", error);
 
+      if (error.code === "INVALID_REPORT") {
+    setSelectedFile(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+
+    onInvalidReport();
+    return;
+  }
+
       setError(
     error.message ||
       "Something went wrong while analyzing the report. Please try again."
